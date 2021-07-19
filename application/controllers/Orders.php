@@ -121,7 +121,9 @@ class Orders extends Admin_Controller
         	$this->data['is_vat_enabled'] = ($company['vat_charge_value'] > 0) ? true : false;
         	$this->data['is_service_enabled'] = ($company['service_charge_value'] > 0) ? true : false;
 
-        	$this->data['products'] = $this->model_products->getActiveProductData();      	
+        	$this->data['products'] = $this->model_products->getActiveProductData(); 
+
+        	$this->data['salesreps'] = $this->model_products->getSalesReps();      	
 
             $this->render_template('orders/create', $this->data);
         }	
@@ -204,7 +206,8 @@ class Orders extends Admin_Controller
 
     		$this->data['order_data'] = $result;
 
-        	$this->data['products'] = $this->model_products->getActiveProductData();      	
+        	$this->data['products'] = $this->model_products->getActiveProductData();      
+			$this->data['salesreps'] = $this->model_products->getSalesReps();    	
 
             $this->render_template('orders/edit', $this->data);
         }

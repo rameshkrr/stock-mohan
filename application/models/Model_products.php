@@ -21,6 +21,15 @@ class Model_products extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getSalesReps(){
+		$group = $this->db->where('group_name','SalesRep')->get('groups')->row();
+		$this->db->select('users.*');
+		$this->db->from('user_group');
+		$this->db->join('users','users.id = user_group.user_id','left');
+		$this->db->where('group_id',$group->id);
+		return $this->db->get()->result_array();
+	}
+
 	public function getActiveProductData()
 	{
 		$sql = "SELECT * FROM products WHERE availability = ? ORDER BY id DESC";
