@@ -75,7 +75,17 @@
                     </div>
                   </div>
                 </div>
-                
+                <div class="col-md-4 col-xs-12">
+                <div class="form-group">
+                <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Sales rep</label>
+                <select class="form-control select_group select_salesrep" name="sales_rep" style="width:100%;" id="sales_rep">
+                            <option value=""></option>
+                            <?php foreach ($salesreps as $k => $v): ?>
+                              <option value="<?php echo $v['id'] ?>"><?php echo $v['username'] ?></option>
+                            <?php endforeach ?>
+                          </select>
+                  </div>                
+                </div>                
                 
                 <br /> <br/>
                 <table class="table table-bordered" id="product_info_table">
