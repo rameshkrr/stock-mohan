@@ -109,7 +109,8 @@ class Products extends Admin_Controller
         	$data = array(
         		'name' => $this->input->post('product_name'),
         		'sku' => $this->input->post('sku'),
-        		'price' => $this->input->post('price'),
+        		'price' => $this->input->post('price'), 
+        		'barcode_text' => $this->input->post('barcode_text'), 
         		'qty' => $this->input->post('qty'),
         		'image' => $upload_image,
         		'barcode' => $upload_barcode,
@@ -244,6 +245,7 @@ class Products extends Admin_Controller
                 'name' => $this->input->post('product_name'),
                 'sku' => $this->input->post('sku'),
                 'price' => $this->input->post('price'),
+                'barcode_text' => $this->input->post('barcode_text'),
                 'qty' => $this->input->post('qty'),
                 'description' => $this->input->post('description'),
                 'attribute_value_id' => json_encode($this->input->post('attributes_value_id')),

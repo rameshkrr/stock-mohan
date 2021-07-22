@@ -63,6 +63,10 @@
                     </div>
                 </div>
                 </div>
+                <div class="form-group">
+                  <label for="barcode_text">Barcode text</label>
+                  <input type="text" class="form-control" id="barcode_text" name="barcode_text" placeholder="Enter Barcode text" autocomplete="off"/>
+                </div>
 
                 <div class="form-group">
                   <label for="product_name">Product name</label>
