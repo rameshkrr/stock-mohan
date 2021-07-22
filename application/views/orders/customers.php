@@ -6,11 +6,11 @@
   <section class="content-header">
     <h1>
       Manage
-      <small>Supplier</small>
+      <small>Customer</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Supplier</li>
+      <li class="active">Customer</li>
     </ol>
   </section>
 
@@ -34,32 +34,34 @@
           </div>
         <?php endif; ?>
 
-        <?php if(in_array('createSupplier', $user_permission)): ?>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#addBrandModal">Add Supplier</button>
+        <?php if(in_array('createOrder', $user_permission)): ?>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#addBrandModal">Add Customer</button>
           <br /> <br />
         <?php endif; ?>
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Manage Supplier</h3>
+            <h3 class="box-title">Manage Customer</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Supplier Name</th>
-                <th>Contact person</th>
-                <th>Supplier Address</th>
-                <th>Supplier phone</th>
-                <th>Supplier email</th>
-                <th>Supplier Gstin</th>
+                <th>Customer Name</th>
+                <th>Customer person</th>
+                <th>Customer Address</th>
+                <th>Customer phone</th>
+                <th>Customer email</th>
+                <th>Customer Gstin</th>
                 <th>Account Number</th>
                 <th>Account Holder Name</th>
                 <th>IFSC</th>
                 <th>Account Type</th>
                 <th>Branch</th>
-                <?php if(in_array('updateSupplier', $user_permission) || in_array('deleteSupplier', $user_permission)): ?>
+                <th>Store</th>
+
+                <?php if(in_array('updateOrder', $user_permission) || in_array('deleteOrder', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
               </tr>
@@ -81,71 +83,79 @@
 </div>
 <!-- /.content-wrapper -->
 
-<?php if(in_array('createSupplier', $user_permission)): ?>
+<?php if(in_array('createOrder', $user_permission)): ?>
 <!-- create brand modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="addBrandModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Add Supplier</h4>
+        <h4 class="modal-title">Add Order</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('supplier/create_basic') ?>" method="post" id="createBrandForm">
+      <form role="form" action="<?php echo base_url('orders/create_customers') ?>" method="post" id="createBrandForm">
 
       <div class="modal-body">
-
+  
         <div style="margin-bottom: 15px;">
           <span style="font-size: 16px;font-weight: 600;border-bottom: 1px solid #3c8dbc; color: #3c8dbc;">Basic Details</span>
         </div> 
         <div class="form-group">
-            <label for="supplier_name">Supplier Name</label>
-            <input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <label for="name">Customer Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Order name" autocomplete="off" required>
         </div>
         <div class="form-group">
             <label for="contact_person">Contact person</label>
             <input type="text" class="form-control" id="contact_person" name="contact_person" placeholder="Enter Contact person" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="supplier_address">Supplier Address</label>
-            <input type="text" class="form-control" id="supplier_address" name="supplier_address" placeholder="Enter Supplier Address" autocomplete="off" required>
+            <label for="address">Customer Address</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Enter Customer Address" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="phone">Supplier phone</label>
-            <input type="number" class="form-control" id="phone" name="phone" placeholder="Enter Supplier phone" autocomplete="off" required>
+            <label for="phone">Customer phone</label>
+            <input type="number" class="form-control" id="phone" name="phone" placeholder="Enter Customer phone" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="email">Supplier email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Supplier email" autocomplete="off" required>
+            <label for="email">Customer email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Customer email" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="gstin">Supplier Gstin</label>
-            <input type="text" class="form-control" id="gstin" name="gstin" placeholder="Enter Supplier Gstin" autocomplete="off" required>
+            <label for="gstin">Customer Gstin</label>
+            <input type="text" class="form-control" id="gstin" name="gstin" placeholder="Enter Customer Gstin" autocomplete="off" required>
         </div>       
         <div style="margin-bottom: 15px;">
           <span style="font-size: 16px;font-weight: 600;border-bottom: 1px solid #3c8dbc; color:#3c8dbc">Bank Details</span>
         </div> 
         <div class="form-group">
-            <label for="acc_num">Account Number</label>
-            <input type="number" class="form-control" id="acc_num" name="acc_num" placeholder="Enter Account Number" autocomplete="off" required>
+            <label for="acc_no">Account Number</label>
+            <input type="number" class="form-control" id="acc_no" name="acc_no" placeholder="Enter Account Number" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="name">Account Holder Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Account Holder Name" autocomplete="off" required>
+            <label for="acc_name">Account Holder Name</label>
+            <input type="text" class="form-control" id="acc_name" name="acc_name" placeholder="Enter Account Holder Name" autocomplete="off" required>
         </div>
         <div class="form-group">
             <label for="ifsc">IFSC</label>
             <input type="text" class="form-control" id="ifsc" name="ifsc" placeholder="Enter IFSC" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="acc_type">Supplier Account Type</label>
+            <label for="acc_type">Customer Account Type</label>
             <select name="acc_type" id="acc_type">
               <option value="Savings">Savings</option>
               <option value="Current">Current</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="branch">Supplier Branch</label>
+            <label for="store">Store</label>
+            <select class="form-control select_group" id="store_id" name="store_id">
+              <?php foreach ($stores as $k => $v): ?>
+                <option value="<?php echo $v['name'] ?>"><?php echo $v['name'] ?></option>
+              <?php endforeach ?>
+            </select>
+          </div>
+        <div class="form-group">
+            <label for="branch">Customer Branch</label>
             <input type="text" class="form-control" id="branch" name="branch" placeholder="Enter Branch" autocomplete="off" required>
         </div>
         </div>
@@ -154,7 +164,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
-
+   
 
       </form>
 
@@ -164,7 +174,7 @@
 </div><!-- /.modal -->
 <?php endif; ?>
 
-<?php if(in_array('updateSupplier', $user_permission)): ?>
+<?php if(in_array('updateOrder', $user_permission)): ?>
 <!-- edit brand modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="editBrandModal">
   <div class="modal-dialog" role="document">
@@ -174,55 +184,69 @@
         <h4 class="modal-title">Edit Brand</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('supplier/update') ?>" method="post" id="updateBrandForm">
+      <form role="form" action="<?php echo base_url('orders/update_customer') ?>" method="post" id="updateBrandForm">
 
       <div class="modal-body">
 
+        <div style="margin-bottom: 15px;">
+          <span style="font-size: 16px;font-weight: 600;border-bottom: 1px solid #3c8dbc; color: #3c8dbc;">Basic Details</span>
+        </div> 
         <div class="form-group">
-            <label for="supplier_name">Supplier Name</label>
-            <input type="text" class="form-control" id="supplier_name2" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <label for="name">Customer Name</label>
+            <input type="text" class="form-control" id="name2" name="name" placeholder="Enter Order name" autocomplete="off" required>
         </div>
         <div class="form-group">
             <label for="contact_person">Contact person</label>
-            <input type="text" class="form-control" id="contact_person2" name="contact_person" placeholder="Enter Contact person" autocomplete="off"  required>
+            <input type="text" class="form-control" id="contact_person2" name="contact_person" placeholder="Enter Contact person" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="supplier_address">Supplier Address</label>
-            <input type="text" class="form-control" id="supplier_address2" name="supplier_address" placeholder="Enter Supplier Address" autocomplete="off" required>
+            <label for="address">Customer Address</label>
+            <input type="text" class="form-control" id="address2" name="address" placeholder="Enter Customer Address" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="phone">Supplier phone</label>
-            <input type="number" class="form-control" id="phone2" name="phone" placeholder="Enter Supplier phone" autocomplete="off" required>
+            <label for="phone">Customer phone</label>
+            <input type="number" class="form-control" id="phone2" name="phone" placeholder="Enter Customer phone" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="email">Supplier email</label>
-            <input type="email" class="form-control" id="email2" name="email" placeholder="Enter Supplier email" autocomplete="off" required>
+            <label for="email">Customer email</label>
+            <input type="email" class="form-control" id="email2" name="email" placeholder="Enter Customer email" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="gstin">Supplier Gstin</label>
-            <input type="text" class="form-control" id="gstin2" name="gstin" placeholder="Enter Supplier Gstin" autocomplete="off" required>
+            <label for="gstin">Customer Gstin</label>
+            <input type="text" class="form-control" id="gstin2" name="gstin" placeholder="Enter Customer Gstin" autocomplete="off" required>
+        </div>       
+        <div style="margin-bottom: 15px;">
+          <span style="font-size: 16px;font-weight: 600;border-bottom: 1px solid #3c8dbc; color:#3c8dbc">Bank Details</span>
+        </div> 
+        <div class="form-group">
+            <label for="acc_no">Account Number</label>
+            <input type="number" class="form-control" id="acc_num2" name="acc_no" placeholder="Enter Account Number" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="acc_num">Account Number</label>
-            <input type="number" class="form-control" id="acc_num2" name="acc_num" placeholder="Enter Account Number" autocomplete="off" required>
-        </div>
-        <div class="form-group">
-            <label for="name">Account Holder Name</label>
-            <input type="text" class="form-control" id="name2" name="name" placeholder="Enter Account Holder Name" autocomplete="off" required>
+            <label for="acc_name">Account Holder Name</label>
+            <input type="text" class="form-control" id="acc_name2" name="acc_name" placeholder="Enter Account Holder Name" autocomplete="off" required>
         </div>
         <div class="form-group">
             <label for="ifsc">IFSC</label>
             <input type="text" class="form-control" id="ifsc2" name="ifsc" placeholder="Enter IFSC" autocomplete="off" required>
         </div>
         <div class="form-group">
-            <label for="acc_type">Supplier Account Type</label>
+            <label for="acc_type">Customer Account Type</label>
             <select name="acc_type" id="acc_type">
               <option value="Savings">Savings</option>
               <option value="Current">Current</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="branch">Supplier Branch</label>
+            <label for="store">Store</label>
+            <select class="form-control select_group" id="store_id" name="store_id">
+              <?php foreach ($stores as $k => $v): ?>
+                <option value="<?php echo $v['name'] ?>"><?php echo $v['name'] ?></option>
+              <?php endforeach ?>
+            </select>
+          </div>
+        <div class="form-group">
+            <label for="branch">Customer Branch</label>
             <input type="text" class="form-control" id="branch2" name="branch" placeholder="Enter Branch" autocomplete="off" required>
         </div>
         </div>
@@ -251,7 +275,7 @@
         <h4 class="modal-title">Remove Brand</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('supplier/remove') ?>" method="post" id="removeBrandForm">
+      <form role="form" action="<?php echo base_url('orders/remove_customer') ?>" method="post" id="removeBrandForm">
         <div class="modal-body">
           <p>Do you really want to remove?</p>
         </div>
@@ -272,11 +296,11 @@ var manageTable;
 
 $(document).ready(function() {
 
-  $("#supplierNav").addClass('active');
+  $("#OrderNav").addClass('active');
 
   // initialize the datatable 
   manageTable = $('#manageTable').DataTable({
-    'ajax': 'fetchSupplierData',
+    'ajax': 'fetchCustomerData',
     'order': []
   });
 
@@ -342,19 +366,19 @@ $(document).ready(function() {
 function editBrand(id)
 { 
   $.ajax({
-    url: 'fetchSupplerDataById/'+id,
+    url: 'fetchCustomerDataById/'+id,
     type: 'post',
     dataType: 'json',
     success:function(response) {
 
-      $("#supplier_name2").val(response.supplier_name);
+      $("#name2").val(response.name);
       $("#contact_person2").val(response.contact_person);
-      $("#supplier_address2").val(response.supplier_address);
+      $("#address2").val(response.address);
       $("#phone2").val(response.phone);
       $("#email2").val(response.email);
       $("#gstin2").val(response.gstin);
-      $("#acc_num2").val(response.acc_num);
-      $("#name2").val(response.name);
+      $("#acc_num2").val(response.acc_no);
+      $("#acc_name2").val(response.name);
       $("#ifsc2").val(response.ifsc);
       $("#acc_type2").val(response.acc_type);
       $("#branch2").val(response.acc_type);
