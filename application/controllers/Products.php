@@ -104,13 +104,16 @@ class Products extends Admin_Controller
         if ($this->form_validation->run() == TRUE) {
             // true case
         	$upload_image = $this->upload_image();
+        	$upload_barcode = $this->upload_barcode();
 
         	$data = array(
         		'name' => $this->input->post('product_name'),
         		'sku' => $this->input->post('sku'),
-        		'price' => $this->input->post('price'),
+        		'price' => $this->input->post('price'), 
+        		'barcode_text' => $this->input->post('barcode_text'), 
         		'qty' => $this->input->post('qty'),
         		'image' => $upload_image,
+        		'barcode' => $upload_barcode,
         		'description' => $this->input->post('description'),
         		'attribute_value_id' => json_encode($this->input->post('attributes_value_id')),
         		'brand_id' => json_encode($this->input->post('brands')),
@@ -185,6 +188,34 @@ class Products extends Admin_Controller
         }
     }
 
+    public function upload_barcode()
+    {
+    	// assets/images/barcode_image
+        $config['upload_path'] = 'assets/images/barcode_image';
+        $config['file_name'] =  uniqid();
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = '1000';
+
+        // $config['max_width']  = '1024';s
+        // $config['max_height']  = '768';
+
+        $this->load->library('upload', $config);
+        if ( ! $this->upload->do_upload('barcode_image'))
+        {
+            $error = $this->upload->display_errors();
+            return $error;
+        }
+        else
+        {
+            $data = array('upload_data' => $this->upload->data());
+            $type = explode('.', $_FILES['barcode_image']['name']);
+            $type = $type[count($type) - 1];
+            
+            $path = $config['upload_path'].'/'.$config['file_name'].'.'.$type;
+            return ($data == true) ? $path : false;            
+        }
+    }
+
     /*
     * If the validation is not valid, then it redirects to the edit product page 
     * If the validation is successfully then it updates the data into the database 
@@ -214,6 +245,7 @@ class Products extends Admin_Controller
                 'name' => $this->input->post('product_name'),
                 'sku' => $this->input->post('sku'),
                 'price' => $this->input->post('price'),
+                'barcode_text' => $this->input->post('barcode_text'),
                 'qty' => $this->input->post('qty'),
                 'description' => $this->input->post('description'),
                 'attribute_value_id' => json_encode($this->input->post('attributes_value_id')),
@@ -229,6 +261,13 @@ class Products extends Admin_Controller
                 $upload_image = array('image' => $upload_image);
                 
                 $this->model_products->update($upload_image, $product_id);
+            }
+
+            if($_FILES['product_barcode']['size'] > 0) {
+                $upload_barcode = $this->upload_barcode();
+                $upload_barcode = array('barcode' => $upload_barcode);
+                
+                $this->model_products->update($upload_barcode, $product_id);
             }
 
             $update = $this->model_products->update($data, $product_id);

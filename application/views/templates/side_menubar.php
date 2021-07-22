@@ -89,9 +89,7 @@
                 <?php if(in_array('createStore', $user_permission)): ?>
                   <li id="addGroupNav"><a href="<?php echo base_url('stores/') ?>"><i class="fa fa-circle-o"></i> Manage Stores</a></li>
                 <?php endif; ?>
-                <?php if(in_array('updateStore', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
-                <li id="manageGroupNav"><a href="<?php echo base_url('stores/') ?>"><i class="fa fa-circle-o"></i> Map Outlets</a></li>
-                <?php endif; ?>
+               
               </ul>
             </li>
           <?php endif; ?>
@@ -150,7 +148,7 @@
                 <li id="manageOrdersNav"><a href="<?php echo base_url('orders') ?>"><i class="fa fa-circle-o"></i> Manage Orders</a></li>
                 <?php endif; ?>
 				<?php if(in_array('createOrder', $user_permission)): ?>
-                  <li id="addOrderNav"><a href="<?php echo base_url('orders/customers') ?>"><i class="fa fa-circle-o"></i> Manage Customers</a></li>
+                  <li id="addOrderNavCus"><a href="<?php echo base_url('orders/customers') ?>"><i class="fa fa-circle-o"></i> Manage Customers</a></li>
                 <?php endif; ?>
 				
               </ul>
@@ -183,7 +181,7 @@
 
 			  
 			    <?php if(in_array('viewReports', $user_permission)): ?>
-            <li class="treeview" id="mainGroupNav">
+            <li class="treeview" id="mainGroupNavReport">
               <a href="#">
                 <i class="glyphicon glyphicon-stats"></i>
                 <span>Reports</span>
@@ -195,10 +193,10 @@
 			  
 			  <ul class="treeview-menu">
                 <?php if(in_array('viewReports', $user_permission)): ?>
-                  <li id="addGroupNav"><a href="<?php echo base_url('reports/') ?>"><i class="fa fa-circle-o"></i> Standard Reports</a></li>
+                  <li id="addGroupNavStockreport"><a href="<?php echo base_url('salesreport/') ?>"><i class="fa fa-circle-o"></i> Sales Report</a></li>
                 <?php endif; ?>
                 <?php if(in_array('viewReports', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
-                <li id="manageGroupNav"><a href="<?php echo base_url('reports/') ?>"><i class="fa fa-circle-o"></i> Advanced Reports</a></li>
+                <li id="manageGroupNavReport"><a href="<?php echo base_url('stockreport/') ?>"><i class="fa fa-circle-o"></i> Stock Report</a></li>
                 <?php endif; ?>
               </ul>
 			  

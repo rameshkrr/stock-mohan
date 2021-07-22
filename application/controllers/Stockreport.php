@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Orders extends Admin_Controller 
+class Stockreport extends Admin_Controller 
 {
 	public function __construct()
 	{
@@ -10,12 +10,11 @@ class Orders extends Admin_Controller
 
 		$this->not_logged_in();
 
-		$this->data['page_title'] = 'Orders';
+		$this->data['page_title'] = 'stock Report';
 
 		$this->load->model('model_orders');
 		$this->load->model('model_products');
 		$this->load->model('model_company');
-		$this->load->model('model_customer');
 		$this->load->model('model_stores');
 	}
 
@@ -28,207 +27,9 @@ class Orders extends Admin_Controller
             redirect('dashboard', 'refresh');
         }
 
-		$this->data['page_title'] = 'Manage Orders';		
-		$this->render_template('orders/index', $this->data);		
+		$this->data['page_title'] = 'stock Report'; 
+		$this->render_template('reports/stockreport', $this->data);		
 	}
-
-	public function customers()
-	{
-		if(!in_array('viewOrder', $this->permission)) {
-            redirect('dashboard', 'refresh');
-        }
-		$result = $this->model_customer->getCustomerData();
-		$this->data['stores'] = $this->model_stores->getActiveStore(); 
-		$this->data['results'] = $result;
-		$this->data['page_title'] = 'Manage Customers';
-		$this->render_template('orders/customers', $this->data);		
-	}
-
-	public function create_customers()
-	{
-		if(!in_array('createOrder', $this->permission)) {
-			redirect('dashboard', 'refresh');
-		}
-
-		$response = array();
-
-		$this->form_validation->set_rules('name', 'Customer name', 'trim|required');
-		$this->form_validation->set_rules('contact_person', 'Contact Person', 'trim|required');
-		$this->form_validation->set_rules('address', 'Contact Address', 'trim|required');
-		$this->form_validation->set_rules('phone', 'Customer phone', 'trim|required');
-		$this->form_validation->set_rules('email', 'Customer email', 'trim|required');
-		$this->form_validation->set_rules('gstin', 'Gstin', 'trim|required');
-		$this->form_validation->set_rules('acc_no', 'Account Number', 'trim|required');
-		$this->form_validation->set_rules('acc_name', 'Account Holder Name', 'trim|required');
-		$this->form_validation->set_rules('ifsc', 'IFSC', 'trim|required');
-		$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
-		$this->form_validation->set_rules('branch', 'Branch', 'trim|required');
-		$this->form_validation->set_rules('store_id', 'Store', 'trim|required');
-
-
-
-		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
-
-        if ($this->form_validation->run() == TRUE) {
-        	$data = array(
-        		'name' => $this->input->post('name'),
-        		'contact_person' => $this->input->post('contact_person'),
-        		'address' => $this->input->post('address'),
-        		'phone' => $this->input->post('phone'),
-        		'email' => $this->input->post('email'),
-        		'gstin' => $this->input->post('gstin'),
-        		'acc_no' => $this->input->post('acc_no'),
-        		'acc_name' => $this->input->post('acc_name'),
-        		'ifsc' => $this->input->post('ifsc'),
-        		'acc_type' => $this->input->post('acc_type'),
-        		'branch' => $this->input->post('branch'),
-        		'store_id' => $this->input->post('store_id')
-
-
-        	);
-
-        	$create = $this->model_customer->create($data);
-        	if($create == true) {
-        		$response['success'] = true;
-        		$response['messages'] = 'Succesfully created';
-        	}
-        	else {
-        		$response['success'] = false;
-        		$response['messages'] = 'Error in the database while creating the brand information';			
-        	}
-        }
-        else {
-        	$response['success'] = false;
-        	foreach ($_POST as $key => $value) {
-        		$response['messages'][$key] = form_error($key);
-        	}
-        }        
-        echo json_encode($response);		
-	}
-
-	public function fetchCustomerData()
-	{
-		$result = array('data' => array());
-
-		$data = $this->model_customer->getCustomerData();
-		foreach ($data as $key => $value) {
-
-			// button
-			$buttons = '';
-
-			if(in_array('viewBrand', $this->permission)) {
-				$buttons .= '<button type="button" class="btn btn-default" onclick="editBrand('.$value['id'].')" data-toggle="modal" data-target="#editBrandModal"><i class="fa fa-pencil"></i></button>';	
-			}
-			
-			if(in_array('deleteBrand', $this->permission)) {
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeBrand('.$value['id'].')" data-toggle="modal" data-target="#removeBrandModal"><i class="fa fa-trash"></i></button>
-				';
-			}				
-
-			$result['data'][$key] = array(
-				$value['name'],
-				$value['contact_person'],
-				$value['address'],
-				$value['phone'],
-				$value['email'],
-				$value['gstin'],
-				$value['acc_no'],
-				$value['name'],
-				$value['ifsc'],
-				$value['acc_type'],
-				$value['branch'],
-				$value['store_id'],
-				$buttons
-			);
-		} // /foreach
-
-		echo json_encode($result);
-	}
-
-	public function fetchCustomerDataArray()
-	{
-		
-			$data = $this->model_customer->getCustomerData();
-			echo json_encode($data);
-		
-	}
-
-	public function fetchCustomerDataById($id)
-	{
-		if($id) {
-			$data = $this->model_customer->getCustomerData($id);
-			echo json_encode($data);
-		}
-
-		return false;
-	}
-
-	public function update_customer($id)
-	{
-		if(!in_array('updateOrder', $this->permission)) {
-			redirect('dashboard', 'refresh');
-		}
-
-		$response = array();
-
-		if($id) {
-			$this->form_validation->set_rules('name', 'Customer name', 'trim|required');
-			$this->form_validation->set_rules('contact_person', 'Contact Person', 'trim|required');
-			$this->form_validation->set_rules('address', 'Contact Address', 'trim|required');
-			$this->form_validation->set_rules('phone', 'Customer phone', 'trim|required');
-			$this->form_validation->set_rules('email', 'Customer email', 'trim|required');
-			$this->form_validation->set_rules('gstin', 'Gstin', 'trim|required');
-			$this->form_validation->set_rules('acc_no', 'Account Number', 'trim|required');
-			$this->form_validation->set_rules('acc_name', 'Account Holder Name', 'trim|required');
-			$this->form_validation->set_rules('ifsc', 'IFSC', 'trim|required');
-			$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
-			$this->form_validation->set_rules('branch', 'Branch', 'trim|required');
-			$this->form_validation->set_rules('store_id', 'Store', 'trim|required');
-
-			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
-
-	        if ($this->form_validation->run() == TRUE) {
-	        	$data = array(
-					'name' => $this->input->post('name'),
-					'contact_person' => $this->input->post('contact_person'),
-					'address' => $this->input->post('address'),
-					'phone' => $this->input->post('phone'),
-					'email' => $this->input->post('email'),
-					'gstin' => $this->input->post('gstin'),
-					'acc_no' => $this->input->post('acc_no'),
-					'acc_name' => $this->input->post('acc_name'),
-					'ifsc' => $this->input->post('ifsc'),
-					'acc_type' => $this->input->post('acc_type'),
-					'branch' => $this->input->post('branch'),
-					'store_id' => $this->input->post('store_id')
-				);
-
-	        	$update = $this->model_customer->update($data, $id);
-	        	if($update == true) {
-	        		$response['success'] = true;
-	        		$response['messages'] = 'Succesfully updated';
-	        	}
-	        	else {
-	        		$response['success'] = false;
-	        		$response['messages'] = 'Error in the database while updated the brand information';			
-	        	}
-	        }
-	        else {
-	        	$response['success'] = false;
-	        	foreach ($_POST as $key => $value) {
-	        		$response['messages'][$key] = form_error($key);
-	        	}
-	        }
-		}
-		else {
-			$response['success'] = false;
-    		$response['messages'] = 'Error please refresh the page again!!';
-		}
-
-		echo json_encode($response);
-	}
-
-
 
 	/*
 	* Fetches the orders data from the orders table 
@@ -237,47 +38,44 @@ class Orders extends Admin_Controller
 	public function fetchOrdersData()
 	{
 		$result = array('data' => array());
+		$post = $this->input->post();
 
-		$data = $this->model_orders->getOrdersData();
+		$data = $this->model_products->getFilteredProductData($post);
 
 		foreach ($data as $key => $value) {
 
-			$count_total_item = $this->model_orders->countOrderItem($value['id']);
-			$date = date('d-m-Y', $value['date_time']);
-			$time = date('h:i a', $value['date_time']);
-
-			$date_time = $date . ' ' . $time;
-
+            $store_data = $this->model_stores->getStoresData($value['store_id']);
 			// button
-			$buttons = '';
+            $buttons = '';
+            if(in_array('updateProduct', $this->permission)) {
+    			$buttons .= '<a href="'.base_url('products/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
+            }
 
-			if(in_array('viewOrder', $this->permission)) {
-				$buttons .= '<a target="__blank" href="'.base_url('orders/printDiv/'.$value['id']).'" class="btn btn-default"><i class="fa fa-print"></i></a>';
-			}
+            if(in_array('deleteProduct', $this->permission)) { 
+    			$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
+            }
+			
 
-			if(in_array('updateOrder', $this->permission)) {
-				$buttons .= ' <a href="'.base_url('orders/update/'.$value['id']).'" class="btn btn-default"><i class="fa fa-pencil"></i></a>';
-			}
+			$img = '<img src="'.base_url($value['image']).'" alt="'.$value['name'].'" class="img-circle" width="50" height="50" />';
 
-			if(in_array('deleteOrder', $this->permission)) {
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeFunc('.$value['id'].')" data-toggle="modal" data-target="#removeModal"><i class="fa fa-trash"></i></button>';
-			}
+            $availability = ($value['availability'] == 1) ? '<span class="label label-success">Active</span>' : '<span class="label label-warning">Inactive</span>';
 
-			if($value['paid_status'] == 1) {
-				$paid_status = '<span class="label label-success">Paid</span>';	
-			}
-			else {
-				$paid_status = '<span class="label label-warning">Not Paid</span>';
-			}
+            $qty_status = '';
+            if($value['qty'] <= 10) {
+                $qty_status = '<span class="label label-warning">Low !</span>';
+            } else if($value['qty'] <= 0) {
+                $qty_status = '<span class="label label-danger">Out of stock !</span>';
+            }
+
 
 			$result['data'][$key] = array(
-				$value['bill_no'],
-				$value['customer_name'],
-				$value['customer_phone'],
-				$date_time,
-				$count_total_item,
-				$value['net_amount'],
-				$paid_status,
+				$img,
+				$value['sku'],
+				$value['name'],
+				$value['price'],
+                $value['qty'] . ' ' . $qty_status,
+                $store_data['name'],
+				$availability,
 				$buttons
 			);
 		} // /foreach
@@ -285,33 +83,6 @@ class Orders extends Admin_Controller
 		echo json_encode($result);
 	}
 
-	public function remove_customer()
-	{
-		if(!in_array('deleteOrder', $this->permission)) {
-			redirect('dashboard', 'refresh');
-		}
-		
-		$customer_id = $this->input->post('su_id');
-		$response = array();
-		if($customer_id) {
-			$delete = $this->model_customer->remove($customer_id);
-
-			if($delete == true) {
-				$response['success'] = true;
-				$response['messages'] = "Successfully removed";	
-			}
-			else {
-				$response['success'] = false;
-				$response['messages'] = "Error in the database while removing the brand information";
-			}
-		}
-		else {
-			$response['success'] = false;
-			$response['messages'] = "Refersh the page again!!";
-		}
-
-		echo json_encode($response);
-	}
 	/*
 	* If the validation is not valid, then it redirects to the create page.
 	* If the validation for each input field is valid then it inserts the data into the database 

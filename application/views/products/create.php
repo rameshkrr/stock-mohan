@@ -56,6 +56,19 @@
                 </div>
 
                 <div class="form-group">
+                <label for="barcode_image">Barcode</label>
+                <div class="kv-avatar">
+                    <div class="file-loading">
+                        <input id="barcode_image" name="barcode_image" type="file">
+                    </div>
+                </div>
+                </div>
+                <div class="form-group">
+                  <label for="barcode_text">Barcode text</label>
+                  <input type="text" class="form-control" id="barcode_text" name="barcode_text" placeholder="Enter Barcode text" autocomplete="off"/>
+                </div>
+
+                <div class="form-group">
                   <label for="product_name">Product name</label>
                   <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter product name" autocomplete="off"/>
                 </div>
@@ -165,6 +178,23 @@
         '<i class="glyphicon glyphicon-tag"></i>' +
         '</button>'; 
     $("#product_image").fileinput({
+        overwriteInitial: true,
+        maxFileSize: 1500,
+        showClose: false,
+        showCaption: false,
+        browseLabel: '',
+        removeLabel: '',
+        browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+        removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+        removeTitle: 'Cancel or reset changes',
+        elErrorContainer: '#kv-avatar-errors-1',
+        msgErrorClass: 'alert alert-block alert-danger',
+        // defaultPreviewContent: '<img src="/uploads/default_avatar_male.jpg" alt="Your Avatar">',
+        layoutTemplates: {main2: '{preview} ' +  btnCust + ' {remove} {browse}'},
+        allowedFileExtensions: ["jpg", "png", "gif"]
+    });
+
+    $("#barcode_image").fileinput({
         overwriteInitial: true,
         maxFileSize: 1500,
         showClose: false,
