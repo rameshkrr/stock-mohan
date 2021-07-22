@@ -21,6 +21,27 @@ class Model_orders extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getFilteredOrdersData($post)
+	{
+		$WHERE = [];
+		if(!empty($post['FilterDateFrom'])){
+			$WHERE[] = ' created_date > "'.date('Y-m-d H:i:s',strtotime($post['FilterDateFrom'])).'"';
+		}
+		if(!empty($post['FilterDateTo'])){
+			$WHERE[] = ' created_date < "'.date('Y-m-d H:i:s',strtotime($post['FilterDateTo'])).'"';
+		}
+		if(!empty($post['FilterSalesRep'])){
+			$WHERE[] = ' sales_rep = '.$post['FilterSalesRep'];
+		}
+		$sql = "SELECT * FROM orders ";
+		if(!empty($WHERE)){
+			$sql .= " WHERE ".implode(' AND ',$WHERE);
+		}
+		$sql .= " ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
 	// get the orders item data
 	public function getOrdersItemData($order_id = null)
 	{
@@ -43,6 +64,7 @@ class Model_orders extends CI_Model
     		'customer_address' => $this->input->post('customer_address'),
     		'customer_phone' => $this->input->post('customer_phone'),
     		'date_time' => strtotime(date('Y-m-d h:i:s a')),
+    		'created_date' => date('Y-m-d H:i:s'),
     		'sales_rep' => ($this->input->post('sales_rep') > 0) ?$this->input->post('sales_rep'):0,
     		'gross_amount' => $this->input->post('gross_amount_value'),
     		'service_charge_rate' => $this->input->post('service_charge_rate'),
