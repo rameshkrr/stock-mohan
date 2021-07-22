@@ -195,10 +195,10 @@
 			  
 			  <ul class="treeview-menu">
                 <?php if(in_array('viewReports', $user_permission)): ?>
-                  <li id="addGroupNav"><a href="<?php echo base_url('reports/') ?>"><i class="fa fa-circle-o"></i> Standard Reports</a></li>
+                  <li id="addGroupNav"><a href="<?php echo base_url('salesreport/') ?>"><i class="fa fa-circle-o"></i> Sales Report</a></li>
                 <?php endif; ?>
                 <?php if(in_array('viewReports', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
-                <li id="manageGroupNav"><a href="<?php echo base_url('reports/') ?>"><i class="fa fa-circle-o"></i> Advanced Reports</a></li>
+                <li id="manageGroupNav"><a href="<?php echo base_url('stockreport/') ?>"><i class="fa fa-circle-o"></i> Stock Report</a></li>
                 <?php endif; ?>
               </ul>
 			  

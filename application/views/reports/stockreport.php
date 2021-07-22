@@ -5,12 +5,12 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Sales
+      Stock
       <small>Report</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Sales report</li>
+      <li class="active">Stock report</li>
     </ol>
   </section>
 
@@ -38,7 +38,7 @@
           <!-- <div class="box-header">
             <h3 class="box-title">Manage Orders</h3>
           </div> -->
-          <div class="filters">
+          <!-- <div class="filters">
                 <div class="container">
                     <div class="col-sm-3">
                         <div class="form-group">
@@ -52,37 +52,27 @@
                           <input type="date" class="form-control" id="FilterDateTo" name="FilterDateTo" placeholder="Enter Barcode text" autocomplete="off"/>
                         </div>
                     </div>
+                 
                     <div class="col-sm-3">
                         <div class="form-group">
-                        <label for="FilterSalesRep">Sales rep</label>
-                        <select class="form-control select_group select_salesrep" name="FilterSalesRep" style="width:100%;" id="FilterSalesRep">
-                            <option value=""></option>
-                            <?php foreach ($salesreps as $k => $v): ?>
-                              <option value="<?php echo $v['id'] ?>"><?php echo $v['username'] ?></option>
-                            <?php endforeach ?>
-                          </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="form-group" style="padding-top:25px;">
                             <button class="btn btn-default filter_results">Filter</button>
                             <button class="btn btn-default filter_reset">Reset</button>
                         </div>
                     </div>
                 </div>
-          </div>
+          </div> -->
           <!-- /.box-header -->
           <div class="box-body">
             <table id="manageTable" class="table table-bordered table-striped" style="width:100%;">
               <thead>
               <tr>
-                <th>Bill no</th>
-                <th>Customer Name</th>
-                <th>Customer Phone</th>
-                <th>Date Time</th>
-                <th>Total Products</th>
-                <th>Total Amount</th>
-                <th>Paid status</th>
+                <th>Image</th>
+                <th>SKU</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Store</th>
+                <th>Availability</th>
               </tr>
               </thead>
 
@@ -148,7 +138,6 @@ $(document).ready(function() {
                  scrollCollapse: true,
                 paging:  true,
                'bDestroy': true,
-                "autoWidth": true,
                 "processing": true, //Feature control the processing indicator.
                 "scrollX": true,
                // "serverSide": true, //Feature control DataTables' server-side processing mode.
@@ -169,7 +158,7 @@ $(document).ready(function() {
                 },
                   // Load data for the table's content from an Ajax source
                   "ajax": {
-                    "url": base_url + "salesreport/fetchOrdersData",
+                    "url": base_url + "Stockreport/fetchOrdersData",
                     "type": "POST",
                     "data":data
               }, 
@@ -183,7 +172,7 @@ $(document).ready(function() {
     var data = {
         'FilterDateFrom':$('#FilterDateFrom').val(),
         'FilterDateTo':$('#FilterDateTo').val(),
-        'FilterSalesRep':$('#FilterSalesRep').val(),
+        'FilterStockRep':$('#FilterStockRep').val(),
     }
     getMyorders(data);
  });

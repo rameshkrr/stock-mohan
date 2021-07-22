@@ -20,6 +20,27 @@ class Model_products extends CI_Model
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+	
+	public function getFilteredProductData($post)
+	{
+		$WHERE = [];
+		// if(!empty($post['FilterDateFrom'])){
+		// 	$WHERE[] = ' created_date > "'.date('Y-m-d H:i:s',strtotime($post['FilterDateFrom'])).'"';
+		// }
+		// if(!empty($post['FilterDateTo'])){
+		// 	$WHERE[] = ' created_date < "'.date('Y-m-d H:i:s',strtotime($post['FilterDateTo'])).'"';
+		// }
+		// if(!empty($post['FilterSalesRep'])){
+		// 	$WHERE[] = ' sales_rep = '.$post['FilterSalesRep'];
+		// }
+		$sql = "SELECT * FROM products ";
+		if(!empty($WHERE)){
+			$sql .= " WHERE ".implode(' AND ',$WHERE);
+		}
+		$sql .= " ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 
 	public function getSalesReps(){
 		$group = $this->db->where('group_name','SalesRep')->get('groups')->row();
