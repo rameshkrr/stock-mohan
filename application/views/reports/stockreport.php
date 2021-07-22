@@ -126,9 +126,10 @@ var base_url = "<?php echo base_url(); ?>";
 
 $(document).ready(function() {
 
-  $("#mainOrdersNav").addClass('active');
-  $("#manageOrdersNav").addClass('active');
+  $("#addGroupNavStockreport").addClass('active');
+  $("#mainGroupNavReport").addClass('active');
 
+  
 
   function getMyorders(data = {}) 
         {
