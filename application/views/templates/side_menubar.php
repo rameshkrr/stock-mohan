@@ -150,7 +150,7 @@
                 <li id="manageOrdersNav"><a href="<?php echo base_url('orders') ?>"><i class="fa fa-circle-o"></i> Manage Orders</a></li>
                 <?php endif; ?>
 				<?php if(in_array('createOrder', $user_permission)): ?>
-                  <li id="addOrderNav"><a href="<?php echo base_url('') ?>"><i class="fa fa-circle-o"></i> Manage Customers</a></li>
+                  <li id="addOrderNav"><a href="<?php echo base_url('orders/customers') ?>"><i class="fa fa-circle-o"></i> Manage Customers</a></li>
                 <?php endif; ?>
 				
               </ul>

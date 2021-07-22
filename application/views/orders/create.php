@@ -38,8 +38,18 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">Add Order</h3>
+            <div>
+            <span>Select Customer</span>
+            <select name="customers" id="customers_select" onchange="appendCustomer(this)">
+              <option value="select">select customer</option>
+            </select>
+          </div>
           </div>
           <!-- /.box-header -->
+         
+          <div>
+            
+          </div>
           <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
               <div class="box-body">
 
@@ -185,7 +195,26 @@
   var base_url = "<?php echo base_url(); ?>";
 
   $(document).ready(function() {
+
+    let customers_select = document.getElementById("customers_select");
+    $.ajax({
+          url: base_url + '/orders/fetchCustomerDataArray/',
+          type: 'post',
+          dataType: 'json',
+          success:function(res) {
+            if(res.length > 1) {
+
+              res.forEach((i,j)=>{
+                console.log(i)
+
+              var htmls = `<option id="${i.id}" value="${i.id}">${i.name}+,${i.email}</option>`
+              customers_select.innerHTML += htmls
+            })
+          }
+        }
+    });
     $(".select_group").select2();
+    
     // $("#description").wysihtml5();
 
     $("#mainOrdersNav").addClass('active');
@@ -239,6 +268,8 @@
 
       return false;
     });
+   
+
 
   }); // /document
 
@@ -352,5 +383,27 @@
   {
     $("#product_info_table tbody tr#row_"+tr_id).remove();
     subAmount();
+  }
+
+  function appendCustomer(e){
+    var id = e.options[e.selectedIndex].value;
+    var customer_name = document.getElementById("customer_name");
+    var customer_address = document.getElementById("customer_address");
+    var customer_phone = document.getElementById("customer_phone");
+    customer_name.value = '';
+    customer_address.value = '';
+    customer_phone.value = ''
+
+
+    $.ajax({
+          url: base_url + '/orders/fetchCustomerDataById/'+id,
+          type: 'post',
+          dataType: 'json',
+          success:function(response) {
+            customer_name.value = response.name;
+            customer_address.value = response.address;
+            customer_phone.value = response.phone;
+          }
+        });
   }
 </script>
