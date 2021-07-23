@@ -157,8 +157,8 @@
 
 
 
-      <?php if(in_array('createStore', $user_permission) || in_array('updateStore', $user_permission) || in_array('viewStore', $user_permission) || in_array('deleteStore', $user_permission)): ?>
-            <li class="treeview" id="mainGroupNav">
+          <?php if(in_array('createAccount', $user_permission) || in_array('updateAccount', $user_permission) || in_array('viewAccount', $user_permission) || in_array('deleteAccount', $user_permission)): ?>
+            <li class="treeview" id="mainGroupNavAccount">
               <a href="#">
                 <i class="fa fa-calculator"></i>
                 <span>Accounts</span>
@@ -166,13 +166,9 @@
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
-              <ul class="treeview-menu">
-                <?php if(in_array('createStore', $user_permission)): ?>
-                  <li id="addGroupNav"><a href="<?php echo base_url('stores/') ?>"><i class="fa fa-circle-o"></i> Debit Note</a></li>
-                <?php endif; ?>
-                <?php if(in_array('updateStore', $user_permission) || in_array('viewGroup', $user_permission) || in_array('deleteGroup', $user_permission)): ?>
-                <li id="manageGroupNav"><a href="<?php echo base_url('stores/') ?>"><i class="fa fa-circle-o"></i> Credit Note</a></li>
-                <?php endif; ?>
+              <ul class="treeview-menu">                
+                <li id="addGroupNavAccount"><a href="<?php echo base_url('account/debit/') ?>"><i class="fa fa-circle-o"></i> Debit Note</a></li>
+                <li id="manageGroupNavAccount"><a href="<?php echo base_url('account/debit/') ?>"><i class="fa fa-circle-o"></i> Credit Note</a></li>
               </ul>
             </li>
           <?php endif; ?>
