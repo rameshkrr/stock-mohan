@@ -59,7 +59,11 @@ class Supplier extends Admin_Controller
 				$value['phone'],
 				$value['email'],
 				$value['gstin'],
-				
+				$value['acc_num'],
+				$value['name'],
+				$value['ifsc'],
+				$value['acc_type'],
+				$value['branch'],				
 				$buttons
 			);
 		} // /foreach
@@ -95,6 +99,12 @@ class Supplier extends Admin_Controller
 		$this->form_validation->set_rules('phone', 'Supplier phone', 'trim|required');
 		$this->form_validation->set_rules('email', 'Supplier email', 'trim|required');
 		$this->form_validation->set_rules('gstin', 'Gstin', 'trim|required');
+		$this->form_validation->set_rules('acc_num', 'Account Number', 'trim|required');
+		$this->form_validation->set_rules('name', 'Account Holder Name', 'trim|required');
+		$this->form_validation->set_rules('ifsc', 'IFSC', 'trim|required');
+		$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
+		$this->form_validation->set_rules('branch', 'Branch', 'trim|required');
+
 
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
@@ -106,6 +116,11 @@ class Supplier extends Admin_Controller
         		'phone' => $this->input->post('phone'),
         		'email' => $this->input->post('email'),
         		'gstin' => $this->input->post('gstin'),
+        		'acc_num' => $this->input->post('acc_num'),
+        		'name' => $this->input->post('name'),
+        		'ifsc' => $this->input->post('ifsc'),
+        		'acc_type' => $this->input->post('acc_type'),
+        		'branch' => $this->input->post('branch')
 
         	);
 
@@ -154,6 +169,11 @@ class Supplier extends Admin_Controller
             $this->form_validation->set_rules('phone', 'Supplier phone', 'trim|required');
             $this->form_validation->set_rules('email', 'Supplier email', 'trim|required');
             $this->form_validation->set_rules('gstin', 'Gstin', 'trim|required');
+			$this->form_validation->set_rules('acc_num', 'Account Number', 'trim|required');
+			$this->form_validation->set_rules('name', 'Account Holder Name', 'trim|required');
+			$this->form_validation->set_rules('ifsc', 'IFSC', 'trim|required');
+			$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
+			$this->form_validation->set_rules('branch', 'Branch', 'trim|required');
 
 			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
 
@@ -165,7 +185,11 @@ class Supplier extends Admin_Controller
                     'phone' => $this->input->post('phone'),
                     'email' => $this->input->post('email'),
                     'gstin' => $this->input->post('gstin'),
-    
+					'acc_num' => $this->input->post('acc_num'),
+					'name' => $this->input->post('name'),
+					'ifsc' => $this->input->post('ifsc'),
+					'acc_type' => $this->input->post('acc_type'),
+					'branch' => $this->input->post('branch')
                 );
 
 	        	$update = $this->model_supplier->update($data, $id);

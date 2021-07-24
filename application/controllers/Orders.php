@@ -15,6 +15,8 @@ class Orders extends Admin_Controller
 		$this->load->model('model_orders');
 		$this->load->model('model_products');
 		$this->load->model('model_company');
+		$this->load->model('model_customer');
+		$this->load->model('model_stores');
 	}
 
 	/* 
@@ -26,9 +28,207 @@ class Orders extends Admin_Controller
             redirect('dashboard', 'refresh');
         }
 
-		$this->data['page_title'] = 'Manage Orders';
+		$this->data['page_title'] = 'Manage Orders';		
 		$this->render_template('orders/index', $this->data);		
 	}
+
+	public function customers()
+	{
+		if(!in_array('viewOrder', $this->permission)) {
+            redirect('dashboard', 'refresh');
+        }
+		$result = $this->model_customer->getCustomerData();
+		$this->data['stores'] = $this->model_stores->getActiveStore(); 
+		$this->data['results'] = $result;
+		$this->data['page_title'] = 'Manage Customers';
+		$this->render_template('orders/customers', $this->data);		
+	}
+
+	public function create_customers()
+	{
+		if(!in_array('createOrder', $this->permission)) {
+			redirect('dashboard', 'refresh');
+		}
+
+		$response = array();
+
+		$this->form_validation->set_rules('name', 'Customer name', 'trim|required');
+		$this->form_validation->set_rules('contact_person', 'Contact Person', 'trim|required');
+		$this->form_validation->set_rules('address', 'Contact Address', 'trim|required');
+		$this->form_validation->set_rules('phone', 'Customer phone', 'trim|required');
+		$this->form_validation->set_rules('email', 'Customer email', 'trim|required');
+		$this->form_validation->set_rules('gstin', 'Gstin', 'trim|required');
+		$this->form_validation->set_rules('acc_no', 'Account Number', 'trim|required');
+		$this->form_validation->set_rules('acc_name', 'Account Holder Name', 'trim|required');
+		$this->form_validation->set_rules('ifsc', 'IFSC', 'trim|required');
+		$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
+		$this->form_validation->set_rules('branch', 'Branch', 'trim|required');
+		$this->form_validation->set_rules('store_id', 'Store', 'trim|required');
+
+
+
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+        if ($this->form_validation->run() == TRUE) {
+        	$data = array(
+        		'name' => $this->input->post('name'),
+        		'contact_person' => $this->input->post('contact_person'),
+        		'address' => $this->input->post('address'),
+        		'phone' => $this->input->post('phone'),
+        		'email' => $this->input->post('email'),
+        		'gstin' => $this->input->post('gstin'),
+        		'acc_no' => $this->input->post('acc_no'),
+        		'acc_name' => $this->input->post('acc_name'),
+        		'ifsc' => $this->input->post('ifsc'),
+        		'acc_type' => $this->input->post('acc_type'),
+        		'branch' => $this->input->post('branch'),
+        		'store_id' => $this->input->post('store_id')
+
+
+        	);
+
+        	$create = $this->model_customer->create($data);
+        	if($create == true) {
+        		$response['success'] = true;
+        		$response['messages'] = 'Succesfully created';
+        	}
+        	else {
+        		$response['success'] = false;
+        		$response['messages'] = 'Error in the database while creating the brand information';			
+        	}
+        }
+        else {
+        	$response['success'] = false;
+        	foreach ($_POST as $key => $value) {
+        		$response['messages'][$key] = form_error($key);
+        	}
+        }        
+        echo json_encode($response);		
+	}
+
+	public function fetchCustomerData()
+	{
+		$result = array('data' => array());
+
+		$data = $this->model_customer->getCustomerData();
+		foreach ($data as $key => $value) {
+
+			// button
+			$buttons = '';
+
+			if(in_array('viewBrand', $this->permission)) {
+				$buttons .= '<button type="button" class="btn btn-default" onclick="editBrand('.$value['id'].')" data-toggle="modal" data-target="#editBrandModal"><i class="fa fa-pencil"></i></button>';	
+			}
+			
+			if(in_array('deleteBrand', $this->permission)) {
+				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeBrand('.$value['id'].')" data-toggle="modal" data-target="#removeBrandModal"><i class="fa fa-trash"></i></button>
+				';
+			}				
+
+			$result['data'][$key] = array(
+				$value['name'],
+				$value['contact_person'],
+				$value['address'],
+				$value['phone'],
+				$value['email'],
+				$value['gstin'],
+				$value['acc_no'],
+				$value['name'],
+				$value['ifsc'],
+				$value['acc_type'],
+				$value['branch'],
+				$value['store_id'],
+				$buttons
+			);
+		} // /foreach
+
+		echo json_encode($result);
+	}
+
+	public function fetchCustomerDataArray()
+	{
+		
+			$data = $this->model_customer->getCustomerData();
+			echo json_encode($data);
+		
+	}
+
+	public function fetchCustomerDataById($id)
+	{
+		if($id) {
+			$data = $this->model_customer->getCustomerData($id);
+			echo json_encode($data);
+		}
+
+		return false;
+	}
+
+	public function update_customer($id)
+	{
+		if(!in_array('updateOrder', $this->permission)) {
+			redirect('dashboard', 'refresh');
+		}
+
+		$response = array();
+
+		if($id) {
+			$this->form_validation->set_rules('name', 'Customer name', 'trim|required');
+			$this->form_validation->set_rules('contact_person', 'Contact Person', 'trim|required');
+			$this->form_validation->set_rules('address', 'Contact Address', 'trim|required');
+			$this->form_validation->set_rules('phone', 'Customer phone', 'trim|required');
+			$this->form_validation->set_rules('email', 'Customer email', 'trim|required');
+			$this->form_validation->set_rules('gstin', 'Gstin', 'trim|required');
+			$this->form_validation->set_rules('acc_no', 'Account Number', 'trim|required');
+			$this->form_validation->set_rules('acc_name', 'Account Holder Name', 'trim|required');
+			$this->form_validation->set_rules('ifsc', 'IFSC', 'trim|required');
+			$this->form_validation->set_rules('acc_type', 'Account Type', 'trim|required');
+			$this->form_validation->set_rules('branch', 'Branch', 'trim|required');
+			$this->form_validation->set_rules('store_id', 'Store', 'trim|required');
+
+			$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
+
+	        if ($this->form_validation->run() == TRUE) {
+	        	$data = array(
+					'name' => $this->input->post('name'),
+					'contact_person' => $this->input->post('contact_person'),
+					'address' => $this->input->post('address'),
+					'phone' => $this->input->post('phone'),
+					'email' => $this->input->post('email'),
+					'gstin' => $this->input->post('gstin'),
+					'acc_no' => $this->input->post('acc_no'),
+					'acc_name' => $this->input->post('acc_name'),
+					'ifsc' => $this->input->post('ifsc'),
+					'acc_type' => $this->input->post('acc_type'),
+					'branch' => $this->input->post('branch'),
+					'store_id' => $this->input->post('store_id')
+				);
+
+	        	$update = $this->model_customer->update($data, $id);
+	        	if($update == true) {
+	        		$response['success'] = true;
+	        		$response['messages'] = 'Succesfully updated';
+	        	}
+	        	else {
+	        		$response['success'] = false;
+	        		$response['messages'] = 'Error in the database while updated the brand information';			
+	        	}
+	        }
+	        else {
+	        	$response['success'] = false;
+	        	foreach ($_POST as $key => $value) {
+	        		$response['messages'][$key] = form_error($key);
+	        	}
+	        }
+		}
+		else {
+			$response['success'] = false;
+    		$response['messages'] = 'Error please refresh the page again!!';
+		}
+
+		echo json_encode($response);
+	}
+
+
 
 	/*
 	* Fetches the orders data from the orders table 
@@ -85,6 +285,33 @@ class Orders extends Admin_Controller
 		echo json_encode($result);
 	}
 
+	public function remove_customer()
+	{
+		if(!in_array('deleteOrder', $this->permission)) {
+			redirect('dashboard', 'refresh');
+		}
+		
+		$customer_id = $this->input->post('su_id');
+		$response = array();
+		if($customer_id) {
+			$delete = $this->model_customer->remove($customer_id);
+
+			if($delete == true) {
+				$response['success'] = true;
+				$response['messages'] = "Successfully removed";	
+			}
+			else {
+				$response['success'] = false;
+				$response['messages'] = "Error in the database while removing the brand information";
+			}
+		}
+		else {
+			$response['success'] = false;
+			$response['messages'] = "Refersh the page again!!";
+		}
+
+		echo json_encode($response);
+	}
 	/*
 	* If the validation is not valid, then it redirects to the create page.
 	* If the validation for each input field is valid then it inserts the data into the database 
