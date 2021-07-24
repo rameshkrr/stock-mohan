@@ -220,6 +220,21 @@
                         } ?>></td>
                       </tr>
                       <tr>
+                        <td>Account</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="createAccount" <?php if($serialize_permission) {
+                          if(in_array('createAccount', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="updateAccount" <?php if($serialize_permission) {
+                          if(in_array('updateAccount', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="viewAccount" <?php if($serialize_permission) {
+                          if(in_array('viewAccount', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" class="minimal" value="deleteAccount" <?php if($serialize_permission) {
+                          if(in_array('deleteAccount', $serialize_permission)) { echo "checked"; } 
+                        } ?>></td>
+                      </tr>
+                      <tr>
                         <td>Reports</td>
                         <td> - </td>
                         <td> - </td>
