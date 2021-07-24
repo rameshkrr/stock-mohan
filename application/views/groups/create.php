@@ -130,6 +130,20 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteAccount" class="minimal"></td>
                       </tr>
                       <tr>
+                        <td>Debits</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createDebit" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateDebit" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewDebit" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteDebit" class="minimal"></td>
+                      </tr>
+                      <tr>
+                        <td>Credits</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createCredit" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateCredit" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewCredit" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteCredit" class="minimal"></td>
+                      </tr>
+                      <tr>
                         <td>Reports</td>
                         <td> - </td>
                         <td> - </td>

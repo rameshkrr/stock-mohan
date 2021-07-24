@@ -168,7 +168,7 @@
               </a>
               <ul class="treeview-menu">                
                 <li id="addGroupNavAccount"><a href="<?php echo base_url('account/debit/') ?>"><i class="fa fa-circle-o"></i> Debit Note</a></li>
-                <li id="manageGroupNavAccount"><a href="<?php echo base_url('account/debit/') ?>"><i class="fa fa-circle-o"></i> Credit Note</a></li>
+                <li id="manageGroupNavAccount"><a href="<?php echo base_url('account/credit/') ?>"><i class="fa fa-circle-o"></i> Credit Note</a></li>
               </ul>
             </li>
           <?php endif; ?>
