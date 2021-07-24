@@ -123,6 +123,13 @@
                         <td><input type="checkbox" name="permission[]" id="permission" value="deleteOrder" class="minimal"></td>
                       </tr>
                       <tr>
+                        <td>Accounts</td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="createAccount" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="updateAccount" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="viewAccount" class="minimal"></td>
+                        <td><input type="checkbox" name="permission[]" id="permission" value="deleteAccount" class="minimal"></td>
+                      </tr>
+                      <tr>
                         <td>Reports</td>
                         <td> - </td>
                         <td> - </td>
