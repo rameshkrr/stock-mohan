@@ -212,7 +212,7 @@
           type: 'post',
           dataType: 'json',
           success:function(res) {
-            if(res.length > 1) {
+            if(res.length > 0) {
 
               res.forEach((i,j)=>{
                 console.log(i)
