@@ -31,15 +31,30 @@ class Account extends Admin_Controller
 		if(!in_array('viewAccount', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
-		$this->render_template('account/index', $this->data);	
-	}
-
-	public function create()
+		$this->render_template('account/debitlist', $this->data);	
+	} 
+	
+	public function credit()
 	{
 		if(!in_array('viewAccount', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
-		$this->render_template('account/create', $this->data);	
+		$this->render_template('account/creditlist', $this->data);	
+	}
+
+	public function create_debit()
+	{
+		if(!in_array('viewAccount', $this->permission)) {
+			redirect('dashboard', 'refresh');
+		}
+		$this->render_template('account/create_debit', $this->data);	
+	}
+	public function create_credit()
+	{
+		if(!in_array('viewAccount', $this->permission)) {
+			redirect('dashboard', 'refresh');
+		}
+		$this->render_template('account/create_credit', $this->data);	
 	}
 
     public function create_debit_post()
