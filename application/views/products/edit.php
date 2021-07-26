@@ -65,10 +65,10 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="barcode_image">Barcode Image</label>
+                  <label for="product_barcode">Barcode Image</label>
                   <div class="kv-avatar">
                       <div class="file-loading">
-                          <input id="barcode_image" name="barcode_image" type="file">
+                          <input id="barcode_image" name="product_barcode" type="file">
                       </div>
                   </div>
                 </div>
@@ -98,36 +98,22 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="gst">GST</label>
+                  <input type="text" class="form-control" id="gst" name="gst" value="<?php echo $product_data['gst']; ?>" placeholder="Enter gst" autocomplete="off" />
+                </div>
+
+                <div class="form-group">
+                  <label for="hsn">HSN</label>
+                  <input type="text" class="form-control" id="hsn" name="hsn" value="<?php echo $product_data['hsn']; ?>" placeholder="Enter HSN" autocomplete="off" />
+                </div>
+
+                <div class="form-group">
                   <label for="description">Description</label>
                   <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter 
                   description" autocomplete="off">
                     <?php echo $product_data['description']; ?>
                   </textarea>
-                </div>
-
-                <?php $attribute_id = json_decode($product_data['attribute_value_id']); ?>
-                <?php if($attributes): ?>
-                  <?php foreach ($attributes as $k => $v): ?>
-                    <div class="form-group">
-                      <label for="groups"><?php echo $v['attribute_data']['name'] ?></label>
-                      <select class="form-control select_group" id="attributes_value_id" name="attributes_value_id[]" multiple="multiple">
-                        <?php foreach ($v['attribute_value'] as $k2 => $v2): ?>
-                          <option value="<?php echo $v2['id'] ?>" <?php if(in_array($v2['id'], $attribute_id)) { echo "selected"; } ?>><?php echo $v2['value'] ?></option>
-                        <?php endforeach ?>
-                      </select>
-                    </div>    
-                  <?php endforeach ?>
-                <?php endif; ?>
-
-                <div class="form-group">
-                  <label for="brands">Brands</label>
-                  <?php $brand_data = json_decode($product_data['brand_id']); ?>
-                  <select class="form-control select_group" id="brands" name="brands[]" multiple="multiple">
-                    <?php foreach ($brands as $k => $v): ?>
-                      <option value="<?php echo $v['id'] ?>" <?php if(in_array($v['id'], $brand_data)) { echo 'selected="selected"'; } ?>><?php echo $v['name'] ?></option>
-                    <?php endforeach ?>
-                  </select>
-                </div>
+                </div>               
 
                 <div class="form-group">
                   <label for="category">Category</label>
@@ -144,6 +130,15 @@
                   <select class="form-control select_group" id="store" name="store">
                     <?php foreach ($stores as $k => $v): ?>
                       <option value="<?php echo $v['id'] ?>" <?php if($product_data['store_id'] == $v['id']) { echo "selected='selected'"; } ?> ><?php echo $v['name'] ?></option>
+                    <?php endforeach ?>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="store">Supplier</label>
+                  <select class="form-control select_group" id="supplier_id" name="supplier_id">
+                    <?php foreach ($supplier as $k => $v): ?>
+                      <option value="<?php echo $v['id'] ?>"><?php echo $v['supplier_name'] ?></option>
                     <?php endforeach ?>
                   </select>
                 </div>

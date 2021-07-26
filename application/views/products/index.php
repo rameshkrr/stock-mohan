@@ -55,6 +55,9 @@
                 <th>Qty</th>
                 <th>Store</th>
                 <th>Availability</th>
+                <th>HSN</th>
+                <th>GST</th>
+                <th>Supplier</th>
                 <?php if(in_array('updateProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
