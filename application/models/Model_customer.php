@@ -45,5 +45,11 @@ class Model_customer extends CI_Model
 			return ($delete == true) ? true : false;
 		}
 	}
+
+	public function countTotalCustomers(){
+		$sql = "SELECT * FROM customers";
+		$query = $this->db->query($sql);
+		return $query->num_rows();
+	}
 	
 }

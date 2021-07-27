@@ -45,5 +45,12 @@ class Model_supplier extends CI_Model
 			return ($delete == true) ? true : false;
 		}
 	}
+
+	public function countTotalSupplier()
+	{
+		$sql = "SELECT * FROM supplier_basic";
+		$query = $this->db->query($sql);
+		return $query->num_rows();
+	}
 	
 }

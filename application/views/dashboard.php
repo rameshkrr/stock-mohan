@@ -40,7 +40,7 @@
             <div class="small-box bg-purple">
               <div class="inner">
                 <h3><?php echo $total_paid_orders ?></h3>
-                <p>Total Paid Orders</p>
+                <p>Total Orders</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
@@ -68,13 +68,13 @@
             <!-- small box -->
             <div class="small-box bg-green">
               <div class="inner">
-                <h3><?php echo 10 ?></h3>
-				 <p>Total Brands</p>
+                <h3><?php echo $total_suppliers ?></h3>
+				 <p>Total Suppliers</p>
               </div>
               <div class="icon">
                 <i class="ion ion-ios-eye"></i>
               </div>
-              <a href="<?php echo base_url('brands/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('supplier/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -83,12 +83,12 @@
             <div class="small-box bg-aqua">
               <div class="inner">
                 <h3><?php echo 4 ?></h3>
-				<p>Total Unpaid Orders</p>
+				<p>Total customers</p>
               </div>
               <div class="icon">
                 <i class="ion ion-stats-bars"></i>
               </div>
-              <a href="<?php echo base_url('users/') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="<?php echo base_url('orders/customers') ?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

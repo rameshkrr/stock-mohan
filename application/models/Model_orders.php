@@ -116,6 +116,13 @@ class Model_orders extends CI_Model
 		}
 	}
 
+	public function countOrder()
+	{
+		$sql = "SELECT * FROM orders_item ";
+		$query = $this->db->query($sql);
+		return $query->num_rows();
+	}
+
 	public function update($id)
 	{
 		if($id) {
@@ -184,8 +191,6 @@ class Model_orders extends CI_Model
 			return true;
 		}
 	}
-
-
 
 	public function remove($id)
 	{

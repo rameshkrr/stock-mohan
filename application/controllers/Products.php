@@ -17,6 +17,7 @@ class Products extends Admin_Controller
 		$this->load->model('model_category');
 		$this->load->model('model_stores');
 		$this->load->model('model_attributes');
+		$this->load->model('model_supplier');
 	}
 
     /* 
@@ -42,6 +43,9 @@ class Products extends Admin_Controller
 		$data = $this->model_products->getProductData();
 
 		foreach ($data as $key => $value) {
+
+            $supplier_id = $this->model_supplier->getSupplierData($value['supplier_id']);
+           
 
             $store_data = $this->model_stores->getStoresData($value['store_id']);
 			// button
@@ -75,6 +79,9 @@ class Products extends Admin_Controller
                 $value['qty'] . ' ' . $qty_status,
                 $store_data['name'],
 				$availability,
+                $value['hsn'],
+                $value['gst'].'%',
+                $supplier_id['supplier_name'],
 				$buttons
 			);
 		} // /foreach
@@ -99,13 +106,18 @@ class Products extends Admin_Controller
 		$this->form_validation->set_rules('qty', 'Qty', 'trim|required');
         $this->form_validation->set_rules('store', 'Store', 'trim|required');
 		$this->form_validation->set_rules('availability', 'Availability', 'trim|required');
+		$this->form_validation->set_rules('gst', 'Availability', 'trim|required');
+		$this->form_validation->set_rules('hsn', 'Availability', 'trim|required');
+
 		
 	
         if ($this->form_validation->run() == TRUE) {
             // true case
         	$upload_image = $this->upload_image();
         	$upload_barcode = $this->upload_barcode();
-
+            $gst = $this->input->post('gst');
+            $sgst = $gst/2;
+            $cgst = $gst/2;
         	$data = array(
         		'name' => $this->input->post('product_name'),
         		'sku' => $this->input->post('sku'),
@@ -120,6 +132,11 @@ class Products extends Admin_Controller
         		'category_id' => json_encode($this->input->post('category')),
                 'store_id' => $this->input->post('store'),
         		'availability' => $this->input->post('availability'),
+        		'gst' => $this->input->post('gst'),
+        		'sgst' => $sgst,
+        		'cgst' => $cgst,
+        		'hsn' => $this->input->post('hsn'),
+                'supplier_id'=> $this->input->post('supplier_id')
         	);
 
         	$create = $this->model_products->create($data);
@@ -151,7 +168,7 @@ class Products extends Admin_Controller
 			$this->data['brands'] = $this->model_brands->getActiveBrands();        	
 			$this->data['category'] = $this->model_category->getActiveCategroy();        	
 			$this->data['stores'] = $this->model_stores->getActiveStore();        	
-
+            $this->data['supplier'] = $this->model_supplier->getSupplierData();
             $this->render_template('products/create', $this->data);
         }	
 	}
@@ -237,10 +254,14 @@ class Products extends Admin_Controller
         $this->form_validation->set_rules('qty', 'Qty', 'trim|required');
         $this->form_validation->set_rules('store', 'Store', 'trim|required');
         $this->form_validation->set_rules('availability', 'Availability', 'trim|required');
+        $this->form_validation->set_rules('gst', 'Gst', 'trim|required');
+		$this->form_validation->set_rules('hsn', 'Hsn', 'trim|required');
 
         if ($this->form_validation->run() == TRUE) {
             // true case
-            
+            $gst = $this->input->post('gst');
+            $sgst = $gst/2;
+            $cgst = $gst/2;
             $data = array(
                 'name' => $this->input->post('product_name'),
                 'sku' => $this->input->post('sku'),
@@ -248,13 +269,15 @@ class Products extends Admin_Controller
                 'barcode_text' => $this->input->post('barcode_text'),
                 'qty' => $this->input->post('qty'),
                 'description' => $this->input->post('description'),
-                'attribute_value_id' => json_encode($this->input->post('attributes_value_id')),
-                'brand_id' => json_encode($this->input->post('brands')),
                 'category_id' => json_encode($this->input->post('category')),
                 'store_id' => $this->input->post('store'),
                 'availability' => $this->input->post('availability'),
+                'gst' => $this->input->post('gst'),
+        		'sgst' => $sgst,
+        		'cgst' => $cgst,
+        		'hsn' => $this->input->post('hsn'),
+                'supplier_id'=> $this->input->post('supplier_id')
             );
-
             
             if($_FILES['product_image']['size'] > 0) {
                 $upload_image = $this->upload_image();
@@ -297,8 +320,8 @@ class Products extends Admin_Controller
             $this->data['attributes'] = $attributes_final_data;
             $this->data['brands'] = $this->model_brands->getActiveBrands();         
             $this->data['category'] = $this->model_category->getActiveCategroy();           
-            $this->data['stores'] = $this->model_stores->getActiveStore();          
-
+            $this->data['stores'] = $this->model_stores->getActiveStore();
+            $this->data['supplier'] = $this->model_supplier->getSupplierData();
             $product_data = $this->model_products->getProductData($product_id);
             $this->data['product_data'] = $product_data;
             $this->render_template('products/edit', $this->data); 
