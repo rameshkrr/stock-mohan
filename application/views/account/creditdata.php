@@ -40,10 +40,11 @@
             <h3 class="box-title">Edit Order <b>OR<?php echo $order_data['order']['order_number'] ?></b></h3>
           </div>
           <!-- /.box-header -->
-          <form role="form" action="<?php base_url('orders/create') ?>" method="post" class="form-horizontal">
+          <form role="form" action="<?php base_url('account/save_credit') ?>" method="post" class="form-horizontal">
+          <input type="hidden" name="order_id" value="<?php echo $order_data['order']['id'] ?>">
               <div class="box-body">
 
-                <?php echo validation_errors(); ?>
+                <?php //echo validation_errors(); ?>
 
                 <div class="form-group">
                   <label for="date" class="col-sm-12 control-label">Date: <?php echo date('Y-m-d') ?></label>
@@ -85,45 +86,53 @@
                               <option value="<?php echo $v['id'] ?>" <?php echo ($order_data['order']['sales_rep']==$v['id'])?'selected':''; ?>><?php echo $v['username'] ?></option>
                             <?php endforeach ?>
                           </select>
-                  </div>                
+                  </div>    
+                  <div class="form-group">
+                    <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="net_amount" name="net_amount" disabled value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
+                      <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
+                    </div>
+                  </div>            
                 </div>      
                 
                 
                 <br /> <br/>
-                <table class="table table-bordered" id="product_info_table">
+                Payment Info
+                <table class="table table-bordered" id="payment_info_table">
                   <thead>
                     <tr>
-                      <th style="width:50%">Product</th>
-                      <th style="width:10%">Qty</th>
-                      <th style="width:10%">Rate</th>
-                      <th style="width:20%">Amount</th>
+                      <th style="width:10%">Payment Date</th>
+                      <th style="width:20%">Paid by</th>
+                      <th style="width:10%">Amount</th>
+                      <th style="width:20%">Remarks</th>
                       <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
                     </tr>
                   </thead>
 
                    <tbody>
 
-                    <?php if(isset($order_data['order_item'])): ?>
+                    <?php if(isset($order_data['payment_item'])): ?>
                       <?php $x = 1; ?>
-                      <?php foreach ($order_data['order_item'] as $key => $val): ?>
+                      <?php foreach ($order_data['payment_item'] as $key => $val): ?>
                         <?php //print_r($v); ?>
                        <tr id="row_<?php echo $x; ?>">
-                         <td>
-                          <select class="form-control select_group product" data-row-id="row_<?php echo $x; ?>" id="product_<?php echo $x; ?>" name="product[]" style="width:100%;" onchange="getProductData(<?php echo $x; ?>)" required>
-                              <option value=""></option>
-                              <?php foreach ($products as $k => $v): ?>
-                                <option value="<?php echo $v['id'] ?>" <?php if($val['product_id'] == $v['id']) { echo "selected='selected'"; } ?>><?php echo $v['name'] ?></option>
-                              <?php endforeach ?>
-                            </select>
-                          </td>
-                          <td><input type="text" name="qty[]" id="qty_<?php echo $x; ?>" class="form-control" required onkeyup="getTotal(<?php echo $x; ?>)" value="<?php echo $val['qty'] ?>" autocomplete="off"></td>
                           <td>
-                            <input type="text" name="rate[]" id="rate_<?php echo $x; ?>" class="form-control" disabled value="<?php echo $val['rate'] ?>" autocomplete="off">
-                            <input type="hidden" name="rate_value[]" id="rate_value_<?php echo $x; ?>" class="form-control" value="<?php echo $val['rate'] ?>" autocomplete="off">
+                            <input type="hidden" name="orders_payment_id[]" id="orders_payment_id[]" value="<?php echo $val['id'] ?>">
+                            <input type="date" name="payment_date[]" id="payment_date_<?php echo $x; ?>" class="form-control"  value="<?php echo $val['payment_date'] ?>" autocomplete="off">
+                            <input type="hidden" name="payment_date_value[]" id="payment_date_value_<?php echo $x; ?>" class="form-control" value="<?php echo $val['payment_date'] ?>" autocomplete="off">
                           </td>
                           <td>
-                            <input type="text" name="amount[]" id="amount_<?php echo $x; ?>" class="form-control" disabled value="<?php echo $val['amount'] ?>" autocomplete="off">
+                            <input type="text" name="paid_by[]" id="paid_by_<?php echo $x; ?>" class="form-control"  value="<?php echo $val['paid_by'] ?>" autocomplete="off">
+                            <input type="hidden" name="paid_by_value[]" id="paid_by_value_<?php echo $x; ?>" class="form-control" value="<?php echo $val['paid_by'] ?>" autocomplete="off">
+                          </td>
+                          <td>
+                            <input type="text" name="amount[]" id="amount_<?php echo $x; ?>" class="form-control"  value="<?php echo $val['amount'] ?>" autocomplete="off">
                             <input type="hidden" name="amount_value[]" id="amount_value_<?php echo $x; ?>" class="form-control" value="<?php echo $val['amount'] ?>" autocomplete="off">
+                          </td> 
+                          <td>
+                            <input type="text" name="remarks[]" id="remarks_<?php echo $x; ?>" class="form-control"  value="<?php echo $val['remarks'] ?>" autocomplete="off">
+                            <input type="hidden" name="remarks_value[]" id="remarks_value_<?php echo $x; ?>" class="form-control" value="<?php echo $val['remarks'] ?>" autocomplete="off">
                           </td>
                           <td><button type="button" class="btn btn-default" onclick="removeRow('<?php echo $x; ?>')"><i class="fa fa-close"></i></button></td>
                        </tr>
@@ -137,54 +146,6 @@
 
                 <div class="col-md-6 col-xs-12 pull pull-right">
 
-                  <div class="form-group">
-                    <label for="gross_amount" class="col-sm-5 control-label">Gross Amount</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" value="<?php echo $order_data['order']['gross_amount'] ?>" autocomplete="off">
-                    </div>
-                  </div>
-                  <?php if($is_service_enabled == true): ?>
-                  <div class="form-group">
-                    <label for="service_charge" class="col-sm-5 control-label">S-Charge <?php echo $company_data['service_charge_value'] ?> %</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="service_charge" name="service_charge" disabled value="<?php echo $order_data['order']['service_charge'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="service_charge_value" name="service_charge_value" value="<?php echo $order_data['order']['service_charge'] ?>" autocomplete="off">
-                    </div>
-                  </div>
-                  <?php endif; ?>
-                  <?php if($is_vat_enabled == true): ?>
-                  <div class="form-group">
-                    <label for="vat_charge" class="col-sm-5 control-label">Vat <?php echo $company_data['vat_charge_value'] ?> %</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled value="<?php echo $order_data['order']['vat_charge'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" value="<?php echo $order_data['order']['vat_charge'] ?>" autocomplete="off">
-                    </div>
-                  </div>
-                  <?php endif; ?>
-                  <div class="form-group">
-                    <label for="discount" class="col-sm-5 control-label">Discount</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" onkeyup="subAmount()" value="<?php echo $order_data['order']['discount'] ?>" autocomplete="off">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="net_amount" name="net_amount" disabled value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
-                      <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" value="<?php echo $order_data['order']['net_amount'] ?>" autocomplete="off">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="paid_status" class="col-sm-5 control-label">Paid Status</label>
-                    <div class="col-sm-7">
-                      <select type="text" class="form-control" id="paid_status" name="paid_status">
-                        <option value="1">Paid</option>
-                        <option value="2">Unpaid</option>
-                      </select>
-                    </div>
-                  </div>
 
                 </div>
               </div>
@@ -213,6 +174,7 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
 
 <script type="text/javascript">
   var base_url = "<?php echo base_url(); ?>";
@@ -250,8 +212,8 @@
     
     // Add new row in the table 
     $("#add_row").unbind('click').bind('click', function() {
-      var table = $("#product_info_table");
-      var count_table_tbody_tr = $("#product_info_table tbody tr").length;
+      var table = $("#payment_info_table");
+      var count_table_tbody_tr = $("#payment_info_table tbody tr").length;
       var row_id = count_table_tbody_tr + 1;
 
       $.ajax({
@@ -263,26 +225,24 @@
 
               // console.log(reponse.x);
                var html = '<tr id="row_'+row_id+'">'+
-                   '<td>'+ 
-                    '<select class="form-control select_group product" data-row-id="'+row_id+'" id="product_'+row_id+'" name="product[]" style="width:100%;" onchange="getProductData('+row_id+')">'+
-                        '<option value=""></option>';
-                        $.each(response, function(index, value) {
-                          html += '<option value="'+value.id+'">'+value.name+'</option>';             
-                        });
-                        
-                      html += '</select>'+
-                    '</td>'+ 
-                    '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
-                    '<td><input type="text" name="rate[]" id="rate_'+row_id+'" class="form-control" disabled><input type="hidden" name="rate_value[]" id="rate_value_'+row_id+'" class="form-control"></td>'+
-                    '<td><input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control" disabled><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control"></td>'+
+                   '<td>'+ '<input type="date" name="payment_date[]" id="payment_date_'+row_id+'" class="form-control"  value="" autocomplete="off"><input type="hidden" name="payment_date_value[]" id="payment_date_value_'+row_id+'" class="form-control" value="" autocomplete="off">'+
+                    '</td>'+  
+                    '<td>'+ '<input type="text" name="paid_by[]" id="paid_by_'+row_id+'" class="form-control"  value="" autocomplete="off"><input type="hidden" name="paid_by_value[]" id="paid_by_value_'+row_id+'" class="form-control" value="" autocomplete="off">'+
+                    '</td>'+
+                    '<td>'+ '<input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control"  value="" autocomplete="off"><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control" value="" autocomplete="off">'+
+                    '</td>'
+                    +
+                    '<td>'+ '<input type="text" name="remarks[]" id="remarks_'+row_id+'" class="form-control"  value="" autocomplete="off"><input type="hidden" name="remarks_value[]" id="remarks_value_'+row_id+'" class="form-control" value="" autocomplete="off">'+
+                    '</td>'
+                    +
                     '<td><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close"></i></button></td>'+
                     '</tr>';
 
                 if(count_table_tbody_tr >= 1) {
-                $("#product_info_table tbody tr:last").after(html);  
+                $("#payment_info_table tbody tr:last").after(html);  
               }
               else {
-                $("#product_info_table tbody").html(html);
+                $("#payment_info_table tbody").html(html);
               }
 
               $(".product").select2();
@@ -353,10 +313,10 @@
     var service_charge = <?php echo ($company_data['service_charge_value'] > 0) ? $company_data['service_charge_value']:0; ?>;
     var vat_charge = <?php echo ($company_data['vat_charge_value'] > 0) ? $company_data['vat_charge_value']:0; ?>;
 
-    var tableProductLength = $("#product_info_table tbody tr").length;
+    var tableProductLength = $("#payment_info_table tbody tr").length;
     var totalSubAmount = 0;
     for(x = 0; x < tableProductLength; x++) {
-      var tr = $("#product_info_table tbody tr")[x];
+      var tr = $("#payment_info_table tbody tr")[x];
       var count = $(tr).attr('id');
       count = count.substring(4);
 
@@ -422,7 +382,7 @@
 
   function removeRow(tr_id)
   {
-    $("#product_info_table tbody tr#row_"+tr_id).remove();
+    $("#payment_info_table tbody tr#row_"+tr_id).remove();
     subAmount();
   }
 </script>
