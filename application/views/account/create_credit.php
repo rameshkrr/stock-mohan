@@ -18,7 +18,7 @@
 <?php if(in_array('createCredit', $user_permission)): ?>
 
 
-      <form role="form" action="<?php echo base_url('account/create_debit_post') ?>" method="post" id="createBrandForm">
+      <form role="form" action="<?php echo base_url('account/create_debit') ?>" method="post" id="createBrandForm">
 
       <div class="modal-body">
 
@@ -77,7 +77,7 @@
 <div class="col-sm-6">
         <div class="form-group">
             <label for="supplier_name">PAYMENT DATE</label>
-            <input type="date" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <input type="date" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" >
         </div>
 </div>
 </div>
@@ -85,13 +85,13 @@
         <div class="col-sm-6">
         <div class="form-group">
             <label for="supplier_name">PAYMENT 1</label>
-            <input type="number" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <input type="number" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" >
         </div>
 </div>
 <div class="col-sm-6">
         <div class="form-group">
             <label for="supplier_name">PAYMENT DATE</label>
-            <input type="date" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <input type="date" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" >
         </div>
 </div>
 </div>
@@ -99,13 +99,13 @@
         <div class="col-sm-6">
         <div class="form-group">
             <label for="supplier_name">PAYMENT 2</label>
-            <input type="number" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <input type="number" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" >
         </div>
 </div>
 <div class="col-sm-6">
         <div class="form-group">
             <label for="supplier_name">PAYMENT 3 DATE</label>
-            <input type="date" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <input type="date" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" >
         </div>
 </div>
 </div>
@@ -113,13 +113,13 @@
         <div class="col-sm-6">        
         <div class="form-group">
             <label for="supplier_name">PAYMENT 3</label>
-            <input type="number" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <input type="number" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" >
         </div>
 </div>
 <div class="col-sm-6">
         <div class="form-group">
             <label for="supplier_name">CLAIMS</label>
-            <input type="number" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <input type="number" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" >
         </div>
 </div>
 </div>
@@ -127,7 +127,7 @@
         <div class="col-sm-6">
         <div class="form-group">
             <label for="supplier_name">REMARKS</label>
-            <input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" required>
+            <input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier name" autocomplete="off" >
         </div>
 </div>
 </div>

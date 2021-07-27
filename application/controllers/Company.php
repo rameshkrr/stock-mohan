@@ -40,6 +40,7 @@ class Company extends Admin_Controller
         		'company_name' => $this->input->post('company_name'),
         		'service_charge_value' => $this->input->post('service_charge_value'),
         		'vat_charge_value' => $this->input->post('vat_charge_value'),
+        		'gstin' => $this->input->post('gstin'),
         		'address' => $this->input->post('address'),
         		'phone' => $this->input->post('phone'),
         		'country' => $this->input->post('country'),
