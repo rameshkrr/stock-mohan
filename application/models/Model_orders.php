@@ -54,12 +54,36 @@ class Model_orders extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getOrdersPaymentData($order_id = null)
+	{
+		if(!$order_id) {
+			return false;
+		}
+
+		$sql = "SELECT * FROM orders_payment WHERE order_id = ?";
+		$query = $this->db->query($sql, array($order_id));
+		return $query->result_array();
+	}
+
+	public function get_last_order(){
+		return $this->db->limit(1)->order_by('id','DESC')->get('orders')->row();
+	}
+
 	public function create()
 	{
 		$user_id = $this->session->userdata('id');
+		$last_order = $this->get_last_order();
+		$date =  date("y");
+		if(!empty($last_order)){
+			$order_number = $date.sprintf("%06d",$last_order->order_sequence+1);
+		}else{
+			$order_number = $date. sprintf("%06d",1);
+		}
 		$bill_no = 'BILPR-'.strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
     	$data = array(
     		'bill_no' => $bill_no,
+			'order_number' => $order_number,
+			'order_sequence' => $order_number,
     		'customer_name' => $this->input->post('customer_name'),
     		'customer_address' => $this->input->post('customer_address'),
     		'customer_phone' => $this->input->post('customer_phone'),

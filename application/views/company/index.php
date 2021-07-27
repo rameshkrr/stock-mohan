@@ -54,6 +54,10 @@
                   <input type="text" class="form-control" id="vat_charge_value" name="vat_charge_value" placeholder="Enter vat charge %" value="<?php echo $company_data['vat_charge_value'] ?>" autocomplete="off">
                 </div>
                 <div class="form-group">
+                  <label for="gstin">GSTIN (%)</label>
+                  <input type="text" class="form-control" id="gstin" name="gstin" placeholder="Enter gstin %" value="<?php echo $company_data['gstin'] ?>" autocomplete="off">
+                </div>
+                <div class="form-group">
                   <label for="address">Address</label>
                   <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" value="<?php echo $company_data['address'] ?>" autocomplete="off">
                 </div>

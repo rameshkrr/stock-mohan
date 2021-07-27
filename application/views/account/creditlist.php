@@ -43,24 +43,16 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="manageTable" class="table table-bordered table-striped">
+            <table id="creditTable" class="table table-bordered table-striped" style="width:100%;">
               <thead>
               <tr>
                 <th>Customer Name</th>
                 <th>order No</th>
                 <th>Invoice No</th>
-                <th>Total Ammount</th>
+                <th>Total Amount</th>
                 <th>Due Data</th>
                 <th>Balance Due</th>
-                <th>Payment Date 1</th>
-                <th>Payment 1</th>
-                <th>Payment Date 2</th>
-                <th>Payment 2</th>
-                <th>Payment Date 3</th>
-                <th>Payment 3</th>
-                <th>Claims</th>
-                <th>Remarks</th>
-                <?php if(in_array('updateAccount', $user_permission) || in_array('deleteAccount', $user_permission)): ?>
+                <?php if(in_array('updateCredit', $user_permission) || in_array('deleteCredit', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
               </tr>
@@ -81,3 +73,48 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+
+<script>
+
+var base_url = "<?php echo base_url(); ?>";
+function getMyorders(data = {}) 
+        {
+            $.fn.dataTable.ext.errMode = 'none'; 
+            /** My Orders Datatable */
+            table = $('#creditTable').DataTable( {
+                 scrollCollapse: true,
+                paging:  true,
+               'bDestroy': true,
+                "autoWidth": true,
+                "processing": true, //Feature control the processing indicator.
+                "scrollX": true,
+               // "serverSide": true, //Feature control DataTables' server-side processing mode.
+                "order": [], //Initial no order.
+                "pageLength": 50, // Set Page Length
+                "lengthMenu":[[10, 25, 50, 100], [10, 25, 50, 100,'All']],
+                "deferRender": true,
+                "searching": false,/** Added to disabled the search by Vrunda @25 March 2020 */
+                searchDelay:1000,
+                  language: {
+                    sLengthMenu: "Show _MENU_ Orders",
+                    emptyTable:     "No Orders Found",
+                    info:           "Showing _START_ to _END_ of _TOTAL_ Orders",
+                    infoEmpty:      "Showing 0 to 0 of 0 Orders",
+                    infoFiltered:   "",
+                    zeroRecords:    "No matching Orders found",
+                    processing: '<span class="progrss"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Processing...</span>'
+                },
+                  // Load data for the table's content from an Ajax source
+                  "ajax": {
+                    "url": base_url + "account/fetchCreditData",
+                    "type": "POST",
+                    "data":data
+              }, 
+                
+            }
+            );
+            /** end */
+        }
+        getMyorders();
+</script>

@@ -32,7 +32,7 @@
           </div>
         <?php endif; ?>
 
-        <?php if(in_array('createAccount', $user_permission)): ?>
+        <?php if(in_array('createDebit', $user_permission)): ?>
           <a class="btn btn-primary" href="<?php echo base_url('account/create_debit') ?>">Add Debit</a>
           <br /> <br />
         <?php endif; ?>
@@ -43,7 +43,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="manageTable" class="table table-bordered table-striped">
+            <table id="dibitTable" class="table table-bordered table-striped">
               <thead>
               <tr>
                 <th>Supplier Name</th>
@@ -81,3 +81,49 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+
+
+<script>
+
+var base_url = "<?php echo base_url(); ?>";
+function getMyorders(data = {}) 
+        {
+            $.fn.dataTable.ext.errMode = 'none'; 
+            /** My Orders Datatable */
+            table = $('#dibitTable').DataTable( {
+                 scrollCollapse: true,
+                paging:  true,
+               'bDestroy': true,
+                "autoWidth": true,
+                "processing": true, //Feature control the processing indicator.
+                "scrollX": true,
+               // "serverSide": true, //Feature control DataTables' server-side processing mode.
+                "order": [], //Initial no order.
+                "pageLength": 50, // Set Page Length
+                "lengthMenu":[[10, 25, 50, 100], [10, 25, 50, 100,'All']],
+                "deferRender": true,
+                "searching": false,/** Added to disabled the search by Vrunda @25 March 2020 */
+                searchDelay:1000,
+                  language: {
+                    sLengthMenu: "Show _MENU_ Orders",
+                    emptyTable:     "No Orders Found",
+                    info:           "Showing _START_ to _END_ of _TOTAL_ Orders",
+                    infoEmpty:      "Showing 0 to 0 of 0 Orders",
+                    infoFiltered:   "",
+                    zeroRecords:    "No matching Orders found",
+                    processing: '<span class="progrss"><i class="fa fa-spinner fa-spin fa-1x fa-fw"></i> Processing...</span>'
+                },
+                  // Load data for the table's content from an Ajax source
+                  "ajax": {
+                    "url": base_url + "account/fetchDebitData",
+                    "type": "POST",
+                    "data":data
+              }, 
+                
+            }
+            );
+            /** end */
+        }
+        getMyorders();
+</script>
