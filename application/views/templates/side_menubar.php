@@ -157,7 +157,7 @@
 
 
 
-          <?php if(in_array('createAccount', $user_permission) || in_array('updateAccount', $user_permission) || in_array('viewAccount', $user_permission) || in_array('deleteAccount', $user_permission)): ?>
+          <?php if(in_array('createCredit', $user_permission) || in_array('updateCredit', $user_permission) || in_array('viewCredit', $user_permission) || in_array('deleteCredit', $user_permission) || in_array('createDebit', $user_permission) || in_array('updateDebit', $user_permission) || in_array('viewDebit', $user_permission) || in_array('deleteDebit', $user_permission)): ?>
             <li class="treeview" id="mainGroupNavAccount">
               <a href="#">
                 <i class="fa fa-calculator"></i>
