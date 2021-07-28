@@ -39,11 +39,11 @@
 
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">Manage Account</h3>
+            <h3 class="box-title">Manage Debit</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="dibitTable" class="table table-bordered table-striped">
+            <table id="dibitTable" class="table table-bordered table-striped" style="width:100%;">
               <thead>
               <tr>
                 <th>Supplier Name</th>
@@ -52,15 +52,7 @@
                 <th>Total Ammount</th>
                 <th>Due Data</th>
                 <th>Balance Due</th>
-                <th>Payment Date 1</th>
-                <th>Payment 1</th>
-                <th>Payment Date 2</th>
-                <th>Payment 2</th>
-                <th>Payment Date 3</th>
-                <th>Payment 3</th>
-                <th>Claims</th>
-                <th>Remarks</th>
-                <?php if(in_array('updateAccount', $user_permission) || in_array('deleteAccount', $user_permission)): ?>
+                <?php if(in_array('updateDebit', $user_permission) || in_array('deleteAccount', $user_permission)): ?>
                   <th>Action</th>
                 <?php endif; ?>
               </tr>

@@ -21,6 +21,14 @@ class Model_orders extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getDebitsData($id = null)
+	{
+
+		$sql = "SELECT debit_note.*,supplier_basic.supplier_name FROM debit_note LEFT JOIN supplier_basic ON debit_note.supplier_id = supplier_basic.id ORDER BY id DESC";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
 	public function getFilteredOrdersData($post)
 	{
 		$WHERE = [];
