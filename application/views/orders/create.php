@@ -103,6 +103,8 @@
                     <tr>
                       <th style="width:50%">Product</th>
                       <th style="width:10%">Qty</th>
+                      <th style="width:10%">CGST</th>
+                      <th style="width:10%">SGST</th>
                       <th style="width:10%">Rate</th>
                       <th style="width:20%">Amount</th>
                       <th style="width:10%"><button type="button" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
@@ -120,6 +122,14 @@
                           </select>
                         </td>
                         <td><input type="text" name="qty[]" id="qty_1" class="form-control" required onkeyup="getTotal(1)"></td>
+                        <td>
+                          <input type="text" name="cgst[]" id="cgst_1" class="form-control" disabled autocomplete="off">
+                          <input type="hidden" name="cgst_value[]" id="cgst_value_1" class="form-control" autocomplete="off">
+                        </td>
+                        <td>
+                          <input type="text" name="sgst[]" id="sgst_1" class="form-control" disabled autocomplete="off">
+                          <input type="hidden" name="sgst_value[]" id="sgst_value_1" class="form-control" autocomplete="off">
+                        </td>
                         <td>
                           <input type="text" name="rate[]" id="rate_1" class="form-control" disabled autocomplete="off">
                           <input type="hidden" name="rate_value[]" id="rate_value_1" class="form-control" autocomplete="off">
@@ -143,29 +153,17 @@
                       <input type="text" class="form-control" id="gross_amount" name="gross_amount" disabled autocomplete="off">
                       <input type="hidden" class="form-control" id="gross_amount_value" name="gross_amount_value" autocomplete="off">
                     </div>
-                  </div>
-                  <?php if($is_service_enabled == true): ?>
+                  </div>                  
                   <div class="form-group">
-                    <label for="service_charge" class="col-sm-5 control-label">S-Charge <?php echo $company_data['service_charge_value'] ?> %</label>
+                    <label for="total_gst_amout" class="col-sm-5 control-label">GST Total</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="service_charge" name="service_charge" disabled autocomplete="off">
-                      <input type="hidden" class="form-control" id="service_charge_value" name="service_charge_value" autocomplete="off">
+                      <input type="text" class="form-control" id="total_gst_amout" disabled name="total_gst_amout" autocomplete="off">
                     </div>
                   </div>
-                  <?php endif; ?>
-                  <?php if($is_vat_enabled == true): ?>
-                  <div class="form-group">
-                    <label for="vat_charge" class="col-sm-5 control-label">Vat <?php echo $company_data['vat_charge_value'] ?> %</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="vat_charge" name="vat_charge" disabled autocomplete="off">
-                      <input type="hidden" class="form-control" id="vat_charge_value" name="vat_charge_value" autocomplete="off">
-                    </div>
-                  </div>
-                  <?php endif; ?>
                   <div class="form-group">
                     <label for="discount" class="col-sm-5 control-label">Discount</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" onkeyup="subAmount()" autocomplete="off">
+                      <input type="text" class="form-control" id="discount" name="discount"  placeholder="Discount" onkeyup="subAmount()" autocomplete="off">
                     </div>
                   </div>
                   <div class="form-group">
@@ -259,6 +257,8 @@
                       html += '</select>'+
                     '</td>'+ 
                     '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
+                    '<td><input type="text" name="cgst[]" id="cgst_'+row_id+'" class="form-control" disabled><input type="hidden" name="cgst[]" id="cgst_'+row_id+'" class="form-control"></td>'+
+                    '<td><input type="text" name="sgst[]" id="sgst_'+row_id+'" class="form-control" disabled><input type="hidden" name="sgst[]" id="sgst_'+row_id+'" class="form-control"></td>'+
                     '<td><input type="text" name="rate[]" id="rate_'+row_id+'" class="form-control" disabled><input type="hidden" name="rate_value[]" id="rate_value_'+row_id+'" class="form-control"></td>'+
                     '<td><input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control" disabled><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control"></td>'+
                     '<td><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close"></i></button></td>'+
@@ -303,12 +303,15 @@
     var product_id = $("#product_"+row_id).val();    
     if(product_id == "") {
       $("#rate_"+row_id).val("");
-      $("#rate_value_"+row_id).val("");
+      $("#rate_value_"+row_id).val("");          
 
       $("#qty_"+row_id).val("");           
 
-      $("#amount_"+row_id).val("");
-      $("#amount_value_"+row_id).val("");
+      $("#cgst_"+row_id).val("");
+      $("#cgst_"+row_id).val("");
+
+      $("#sgst_"+row_id).val("");
+      $("#sgst_"+row_id).val("");
 
     } else {
       $.ajax({
@@ -322,11 +325,18 @@
           $("#rate_"+row_id).val(response.price);
           $("#rate_value_"+row_id).val(response.price);
 
+          $("#cgst_"+row_id).val(response.cgst);
+          $("#cgst_"+row_id).val(response.cgst);
+
+          $("#sgst_"+row_id).val(response.sgst);
+          $("#sgst_"+row_id).val(response.sgst);
+
           $("#qty_"+row_id).val(1);
           $("#qty_value_"+row_id).val(1);
 
           var total = Number(response.price) * 1;
           total = total.toFixed(2);
+          
           $("#amount_"+row_id).val(total);
           $("#amount_value_"+row_id).val(total);
           
@@ -338,17 +348,26 @@
 
   // calculate the total amount of the order
   function subAmount() {
-    var service_charge = <?php echo ($company_data['service_charge_value'] > 0) ? $company_data['service_charge_value']:0; ?>;
-    var vat_charge = <?php echo ($company_data['vat_charge_value'] > 0) ? $company_data['vat_charge_value']:0; ?>;
-
+  
     var tableProductLength = $("#product_info_table tbody tr").length;
     var totalSubAmount = 0;
+    var cgst = 0;
+    var sgst = 0;
+    var gst = 0;
+    var tax = 0;
     for(x = 0; x < tableProductLength; x++) {
       var tr = $("#product_info_table tbody tr")[x];
       var count = $(tr).attr('id');
       count = count.substring(4);
 
       totalSubAmount = Number(totalSubAmount) + Number($("#amount_"+count).val());
+      cgst = Number($("#cgst_"+count).val());
+      sgst = Number($("#sgst_"+count).val());
+      gst = cgst + sgst;
+      tax = totalSubAmount * gst/ 100;
+      
+
+
     } // /for
 
     totalSubAmount = totalSubAmount.toFixed(2);
@@ -356,34 +375,30 @@
     // sub total
     $("#gross_amount").val(totalSubAmount);
     $("#gross_amount_value").val(totalSubAmount);
+    $("#total_gst_amout").val(tax);
 
-    // vat
-    var vat = (Number($("#gross_amount").val())/100) * vat_charge;
-    vat = vat.toFixed(2);
-    $("#vat_charge").val(vat);
-    $("#vat_charge_value").val(vat);
 
-    // service
-    var service = (Number($("#gross_amount").val())/100) * service_charge;
-    service = service.toFixed(2);
-    $("#service_charge").val(service);
-    $("#service_charge_value").val(service);
+    
     
     // total amount
-    var totalAmount = (Number(totalSubAmount) + Number(vat) + Number(service));
+    var totalAmount = (Number(totalSubAmount));
     totalAmount = totalAmount.toFixed(2);
     // $("#net_amount").val(totalAmount);
     // $("#totalAmountValue").val(totalAmount);
-
+   
     var discount = $("#discount").val();
+    var taxValue = $("#total_gst_amout").val();
     if(discount) {
-      var grandTotal = Number(totalAmount) - Number(discount);
+      var grandTotal = Number(totalAmount) + Number(taxValue);
+      grandTotal = Number(totalAmount) - Number(discount);      
       grandTotal = grandTotal.toFixed(2);
       $("#net_amount").val(grandTotal);
       $("#net_amount_value").val(grandTotal);
     } else {
-      $("#net_amount").val(totalAmount);
-      $("#net_amount_value").val(totalAmount);
+
+      var grandTotal = Number(totalAmount) + Number(taxValue);
+      $("#net_amount").val(grandTotal);
+      $("#net_amount_value").val(grandTotal);
       
     } // /else discount 
 
