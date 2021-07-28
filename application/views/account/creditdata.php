@@ -77,16 +77,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-4 col-xs-12">
-                <div class="form-group">
-                <label for="gross_amount" class="col-sm-5 control-label" style="text-align:left;">Sales rep</label>
-                <select class="form-control select_group select_salesrep" name="sales_rep" style="width:100%;" id="sales_rep">
-                            <option value=""></option>
-                            <?php foreach ($salesreps as $k => $v): ?>
-                              <option value="<?php echo $v['id'] ?>" <?php echo ($order_data['order']['sales_rep']==$v['id'])?'selected':''; ?>><?php echo $v['username'] ?></option>
-                            <?php endforeach ?>
-                          </select>
-                  </div>    
+                <div class="col-md-4 col-xs-12">                   
                   <div class="form-group">
                     <label for="net_amount" class="col-sm-5 control-label">Net Amount</label>
                     <div class="col-sm-7">
@@ -96,9 +87,7 @@
                   </div>            
                 </div>      
                 
-                
-                <br /> <br/>
-                Payment Info
+                             
                 <table class="table table-bordered" id="payment_info_table">
                   <thead>
                     <tr>
@@ -158,7 +147,7 @@
 
                 <a target="__blank" href="<?php echo base_url() . 'orders/printDiv/'.$order_data['order']['id'] ?>" class="btn btn-default" >Print</a>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
-                <a href="<?php echo base_url('orders/') ?>" class="btn btn-warning">Back</a>
+                <a href="<?php echo base_url('account/credit') ?>" class="btn btn-warning">Back</a>
               </div>
             </form>
           <!-- /.box-body -->

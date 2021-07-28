@@ -30,12 +30,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <?php echo $this->session->flashdata('error'); ?>
           </div>
-        <?php endif; ?>
-
-        <?php if(in_array('createAccount', $user_permission)): ?>
-          <a class="btn btn-primary" href="<?php echo base_url('account/create_credit') ?>">Add Credit</a>
-          <br /> <br />
-        <?php endif; ?>
+        <?php endif; ?>       
 
         <div class="box">
           <div class="box-header">

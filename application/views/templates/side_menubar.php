@@ -92,23 +92,8 @@
                
               </ul>
             </li>
-          <?php endif; ?>
-
-          <?php if(in_array('createBrand', $user_permission) || in_array('updateBrand', $user_permission) || in_array('viewBrand', $user_permission) || in_array('deleteBrand', $user_permission)): ?>
-            <li id="brandNav"> 
-              <a href="<?php echo base_url('brands/') ?>"> 
-                <i class="fa fa-font-awesome"></i> <span>Brands </span>
-              </a>
-            </li>
-          <?php endif; ?>
-
-          <?php if(in_array('createAttribute', $user_permission) || in_array('updateAttribute', $user_permission) || in_array('viewAttribute', $user_permission) || in_array('deleteAttribute', $user_permission)): ?>
-          <li id="attributeNav">
-            <a href="<?php echo base_url('attributes/') ?>">
-              <i class="fa fa-sliders"></i> <span>Attributes</span>
-            </a>
-          </li>
-          <?php endif; ?>
+          <?php endif; ?>         
+          
 
           <?php if(in_array('createProduct', $user_permission) || in_array('updateProduct', $user_permission) || in_array('viewProduct', $user_permission) || in_array('deleteProduct', $user_permission)): ?>
             <li class="treeview" id="mainProductNav">
