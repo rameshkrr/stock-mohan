@@ -125,13 +125,14 @@ class Account extends Admin_Controller
 
         if ($this->form_validation->run() == TRUE) {
 			if($this->input->post('debit_id')){
+				// echo '<pre>';print_r($this->input->post());exit;
 				$data = array(
 					'order_number' => $this->input->post('order_number'),
 					'invoice_no' => $this->input->post('invoice_number'),
 					'supplier_id' => $this->input->post('supplier_id'),
 					'total_amt' => $this->input->post('total_amount'),
 					'due_amount' => $this->input->post('due_amount'),
-					'balance_due' => $this->input->post('balance_amount'),
+					'balance_due' => $this->input->post('due_amount'),
 					'payment_date_1' => $this->input->post('payment_date_1'),
 					'payment_1' => $this->input->post('payment_1'),
 					'payment_date_2' => $this->input->post('payment_date_2'),
@@ -141,7 +142,7 @@ class Account extends Admin_Controller
 					'claims' => $this->input->post('claims'),
 					'remarks' => $this->input->post('remarks')
 				);
-
+				// echo '<pre>';print_r($data);exit;
 				$create = $this->db->where('id',$this->input->post('debit_id'))->update('debit_note',$data);
 				if($create == true) {
 					$this->session->set_flashdata('success', 'Successfully saved');
@@ -287,7 +288,7 @@ class Account extends Admin_Controller
         		'supplier_id' => $this->input->post('supplier_id'),
         		'total_amt' => $this->input->post('total_amount'),
         		'due_amount' => $this->input->post('due_amount'),
-        		'balance_due' => $this->input->post('balance_amount'),
+        		'balance_due' => $this->input->post('due_amount'),
         		'payment_date_1' => $this->input->post('payment_date_1'),
         		'payment_1' => $this->input->post('payment_1'),
         		'payment_date_2' => $this->input->post('payment_date_2'),

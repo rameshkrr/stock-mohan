@@ -182,6 +182,12 @@ $(document).ready(function() {
             /** end */
         }
         getMyorders();
+ $('.filter_reset').on('click',function(e){
+  $('#FilterDateFrom').val('');
+  $('#FilterDateTo').val('');
+  $('#FilterSalesRep').val('');
+  getMyorders();
+ });
  $('.filter_results').on('click',function(e){
     var data = {
         'FilterDateFrom':$('#FilterDateFrom').val(),

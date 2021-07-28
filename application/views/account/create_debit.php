@@ -70,14 +70,14 @@
 <div class="row">
         <div class="col-sm-6">
         <div class="form-group">
-            <label for="balance_amount">BALANCE DUE</label>
-            <input type="number" class="form-control" id="balance_amount" name="balance_amount" placeholder="BALANCE DUE" autocomplete="off" required>
+            <label for="due_amount">BALANCE DUE</label>
+            <input type="number" class="form-control" id="due_amount" name="due_amount" placeholder="BALANCE DUE" autocomplete="off" required>
         </div>
 </div>
 <div class="col-sm-6">
         <div class="form-group">
-            <label for="payment_date1">PAYMENT DATE 1</label>
-            <input type="date" class="form-control" id="payment_date1" name="payment_date1"  autocomplete="off" >
+            <label for="payment_date_1">PAYMENT DATE 1</label>
+            <input type="date" class="form-control" id="payment_date_1" name="payment_date_1"  autocomplete="off" >
         </div>
 </div>
 </div>
@@ -90,8 +90,8 @@
 </div>
 <div class="col-sm-6">
         <div class="form-group">
-            <label for="payment_date2">PAYMENT DATE 2</label>
-            <input type="date" class="form-control" id="payment_date2" name="supplier_name"  autocomplete="off" >
+            <label for="payment_date_2">PAYMENT DATE 2</label>
+            <input type="date" class="form-control" id="payment_date_2" name="payment_date_2"  autocomplete="off" >
         </div>
 </div>
 </div>
@@ -104,8 +104,8 @@
 </div>
 <div class="col-sm-6">
         <div class="form-group">
-            <label for="payment_date3">PAYMENT 3 DATE</label>
-            <input type="date" class="form-control" id="payment_date3" name="payment_date3"  autocomplete="off" >
+            <label for="payment_date_3">PAYMENT 3 DATE</label>
+            <input type="date" class="form-control" id="payment_date_3" name="payment_date_3"  autocomplete="off" >
         </div>
 </div>
 </div>

@@ -44,8 +44,8 @@ class Salesreport extends Admin_Controller
 		foreach ($data as $key => $value) {
 
 			$count_total_item = $this->model_orders->countOrderItem($value['id']);
-			$date = date('d-m-Y', $value['date_time']);
-			$time = date('h:i a', $value['date_time']);
+			$date = date('d-m-Y', strtotime($value['created_date']));
+			$time = date('h:i a', strtotime($value['created_date']));
 
 			$date_time = $date . ' ' . $time;
 

@@ -69,21 +69,21 @@
 <div class="col-sm-6">
         <div class="form-group">
             <label for="due_date">DUE DATE</label>
-            <input type="date" class="form-control" id="due_date" name="due_date"  autocomplete="off" required value="<?php echo $debitdata->due_date; ?>">
+            <input type="date" class="form-control" id="due_date" name="due_date"  autocomplete="off" required value="<?php echo date('Y-m-d',strtotime($debitdata->due_date)); ?>">
         </div>
 </div>
 </div>
 <div class="row">
         <div class="col-sm-6">
         <div class="form-group">
-            <label for="balance_amount">BALANCE DUE</label>
-            <input type="number" class="form-control" id="balance_amount" name="balance_amount" placeholder="BALANCE DUE" autocomplete="off"  value="<?php echo $debitdata->due_amount; ?>">
+            <label for="due_amount">BALANCE DUE</label>
+            <input type="number" class="form-control" id="due_amount" name="due_amount" placeholder="BALANCE DUE" autocomplete="off" value="<?php echo $debitdata->due_amount; ?>">
         </div>
 </div>
 <div class="col-sm-6">
         <div class="form-group">
-            <label for="payment_date1">PAYMENT DATE 1</label>
-            <input type="date" class="form-control" id="payment_date1" name="payment_date1"  autocomplete="off" value="<?php echo $debitdata->payment_date_1; ?>">
+            <label for="payment_date_1">PAYMENT DATE 1</label>
+            <input type="date" class="form-control" id="payment_date_1" name="payment_date_1"  autocomplete="off" value="<?php echo date('Y-m-d',strtotime($debitdata->payment_date_1)); ?>">
         </div>
 </div>
 </div>
@@ -96,8 +96,8 @@
 </div>
 <div class="col-sm-6">
         <div class="form-group">
-            <label for="payment_date2">PAYMENT DATE 2</label>
-            <input type="date" class="form-control" id="payment_date2" name="supplier_name"  autocomplete="off"  value="<?php echo $debitdata->payment_date_2; ?>">
+            <label for="payment_date_2">PAYMENT DATE 2</label>
+            <input type="date" class="form-control" id="payment_date_2" name="payment_date_2" name="supplier_name"  autocomplete="off"  value="<?php echo date('Y-m-d',strtotime($debitdata->payment_date_2)); ?>">
         </div>
 </div>
 </div>
@@ -110,8 +110,8 @@
 </div>
 <div class="col-sm-6">
         <div class="form-group">
-            <label for="payment_date3">PAYMENT 3 DATE</label>
-            <input type="date" class="form-control" id="payment_date3" name="payment_date3"  autocomplete="off"  value="<?php echo $debitdata->payment_date_3; ?>">
+            <label for="payment_date_3">PAYMENT 3 DATE</label>
+            <input type="date" class="form-control" id="payment_date_3" name="payment_date_3"  autocomplete="off"  value="<?php echo date('Y-m-d',strtotime($debitdata->payment_date_3)); ?>">
         </div>
 </div>
 </div>
@@ -125,7 +125,7 @@
 <div class="col-sm-6">
         <div class="form-group">
             <label for="claims">CLAIMS</label>
-            <input type="number" class="form-control" id="claims" name="claims"  autocomplete="off"  value="<?php echo $debitdata->payment_date_1; ?>">
+            <input type="number" class="form-control" id="claims" name="claims"  autocomplete="off"  value="<?php echo $debitdata->claims; ?>">
         </div>
 </div>
 </div>
