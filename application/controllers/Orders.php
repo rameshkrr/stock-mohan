@@ -285,6 +285,27 @@ class Orders extends Admin_Controller
 		echo json_encode($result);
 	}
 
+	public function print_order_invoice(){
+		error_reporting(E_ALL);
+
+		ob_start(); 
+		$order_id = $this->uri->segment(3);
+		$order =$this->db->where('id',$order_id)->get('orders')->row();
+		$data['order'] = $order;
+		$data['company'] = $this->db->where('id',1)->get('company')->row();
+		$data['products'] = $this->db->select('products.*,orders_item.qty as product_qty,orders_item.amount as product_amount')->from('orders_item')->join('products','products.id = orders_item.product_id','left')->where('order_id',$order_id)->get()->result();
+		$orders_item = $this->model_orders->getOrdersItemData($order->id);
+    		foreach($orders_item as $k => $v) {
+    			$result['order_item'][] = $v;
+    		}   
+		$doc = $this->load->view('template/orderinvoice',$data,TRUE);
+
+		$mpdf = new \Mpdf\Mpdf();
+		$mpdf->WriteHTML($doc);
+		$mpdf->Output();
+		// ob_end_clean();
+	}
+
 	public function remove_customer()
 	{
 		if(!in_array('deleteOrder', $this->permission)) {

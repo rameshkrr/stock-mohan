@@ -15,3 +15,8 @@ ALTER TABLE `orders` ADD `order_sequence` VARCHAR(11) NULL AFTER `order_number`;
 ALTER TABLE `orders` ADD `total_gst_amout` DECIMAL(20,2) NOT NULL AFTER `vat_charge`;
 
 
+
+
+
+-----------------------------
+ALTER TABLE `company` ADD `state` VARCHAR(255) NULL AFTER `country`;
