@@ -157,7 +157,8 @@
                   <div class="form-group">
                     <label for="total_gst_amout" class="col-sm-5 control-label">GST Total</label>
                     <div class="col-sm-7">
-                      <input type="text" class="form-control" id="total_gst_amout" disabled name="total_gst_amout" autocomplete="off">
+                      <input type="text" class="form-control" id="total_gst" name="total_gst" disabled autocomplete="off">
+                      <input type="hidden" class="form-control" id="total_gst_amout" name="total_gst_amout" autocomplete="off">
                     </div>
                   </div>
                   <div class="form-group">
@@ -213,8 +214,6 @@
             if(res.length > 0) {
 
               res.forEach((i,j)=>{
-                console.log(i)
-
               var htmls = `<option id="${i.id}" value="${i.id}">${i.name}+,${i.email}</option>`
               customers_select.innerHTML += htmls
             })
@@ -257,8 +256,8 @@
                       html += '</select>'+
                     '</td>'+ 
                     '<td><input type="number" name="qty[]" id="qty_'+row_id+'" class="form-control" onkeyup="getTotal('+row_id+')"></td>'+
-                    '<td><input type="text" name="cgst[]" id="cgst_'+row_id+'" class="form-control" disabled><input type="hidden" name="cgst[]" id="cgst_'+row_id+'" class="form-control"></td>'+
-                    '<td><input type="text" name="sgst[]" id="sgst_'+row_id+'" class="form-control" disabled><input type="hidden" name="sgst[]" id="sgst_'+row_id+'" class="form-control"></td>'+
+                    '<td><input type="text" name="cgst[]" id="cgst_'+row_id+'" class="form-control" disabled><input type="hidden" name="cgst_value[]" id="cgst_value_'+row_id+'" class="form-control"></td>'+
+                    '<td><input type="text" name="sgst[]" id="sgst_'+row_id+'" class="form-control" disabled><input type="hidden" name="sgst_value[]" id="sgst_value_'+row_id+'" class="form-control"></td>'+
                     '<td><input type="text" name="rate[]" id="rate_'+row_id+'" class="form-control" disabled><input type="hidden" name="rate_value[]" id="rate_value_'+row_id+'" class="form-control"></td>'+
                     '<td><input type="text" name="amount[]" id="amount_'+row_id+'" class="form-control" disabled><input type="hidden" name="amount_value[]" id="amount_value_'+row_id+'" class="form-control"></td>'+
                     '<td><button type="button" class="btn btn-default" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-close"></i></button></td>'+
@@ -326,10 +325,10 @@
           $("#rate_value_"+row_id).val(response.price);
 
           $("#cgst_"+row_id).val(response.cgst);
-          $("#cgst_"+row_id).val(response.cgst);
+          $("#cgst_value_"+row_id).val(response.cgst);
 
           $("#sgst_"+row_id).val(response.sgst);
-          $("#sgst_"+row_id).val(response.sgst);
+          $("#sgst_value_"+row_id).val(response.sgst);
 
           $("#qty_"+row_id).val(1);
           $("#qty_value_"+row_id).val(1);
@@ -364,9 +363,7 @@
       cgst = Number($("#cgst_"+count).val());
       sgst = Number($("#sgst_"+count).val());
       gst = cgst + sgst;
-      tax = totalSubAmount * gst/ 100;
-      
-
+      tax += Number($("#amount_"+count).val()) * gst/ 100;
 
     } // /for
 
@@ -376,10 +373,9 @@
     $("#gross_amount").val(totalSubAmount);
     $("#gross_amount_value").val(totalSubAmount);
     $("#total_gst_amout").val(tax);
+    $("#total_gst").val(tax);
 
 
-    
-    
     // total amount
     var totalAmount = (Number(totalSubAmount));
     totalAmount = totalAmount.toFixed(2);

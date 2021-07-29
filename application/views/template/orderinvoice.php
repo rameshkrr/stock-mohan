@@ -36,7 +36,6 @@ div.cls_007{font-family:Tahoma,serif;font-size:11.2px;color:rgb(0,0,0);font-weig
 <div style="position:absolute;left:48.00px;top:102.00px" class="cls_003"><span class="cls_003">Con:</span></div>
 <div style="position:absolute;left:74.31px;top:102.00px" class="cls_003"><span class="cls_003"><?php echo $company->phone; ?></span></div>
 <div style="position:absolute;left:48.00px;top:114.00px" class="cls_003"><span class="cls_003">GSTIN: <?php echo $company->gstin; ?></span></div>
-<div style="position:absolute;left:48.00px;top:126.00px" class="cls_003"><span class="cls_003">State: <?php echo $company->state; ?></span></div>
 <div style="position:absolute;left:384.00px;top:132.00px" class="cls_003"><span class="cls_003">Buyer's Order No.</span></div>
 <div style="position:absolute;left:486.00px;top:132.00px" class="cls_003"><span class="cls_003"><?php echo 'OR'.$order->order_number;?></span></div>
 <div style="position:absolute;left:42.00px;top:150.00px" class="cls_006"><span class="cls_006">Consignee</span></div>

@@ -106,7 +106,8 @@ class Model_orders extends CI_Model
     		'net_amount' => $this->input->post('net_amount_value'),
     		'discount' => $this->input->post('discount'),
     		'paid_status' => 2,
-    		'user_id' => $user_id
+    		'user_id' => $user_id,
+			'total_gst_amout' => $this->input->post('total_gst_amout')
     	);
 
 		$insert = $this->db->insert('orders', $data);
@@ -114,7 +115,7 @@ class Model_orders extends CI_Model
 
 		$this->load->model('model_products');
 
-		$count_product = count($this->input->post('product'));
+		$count_product = count($this->input->post('product'));		
     	for($x = 0; $x < $count_product; $x++) {
     		$items = array(
     			'order_id' => $order_id,
@@ -122,6 +123,8 @@ class Model_orders extends CI_Model
     			'qty' => $this->input->post('qty')[$x],
     			'rate' => $this->input->post('rate_value')[$x],
     			'amount' => $this->input->post('amount_value')[$x],
+    			'sgst' => $this->input->post('sgst_value')[$x],
+    			'cgst' => $this->input->post('cgst_value')[$x],
     		);
 
     		$this->db->insert('orders_item', $items);
@@ -174,7 +177,8 @@ class Model_orders extends CI_Model
 	    		'net_amount' => $this->input->post('net_amount_value'),
 	    		'discount' => $this->input->post('discount'),
 	    		'paid_status' => $this->input->post('paid_status'),
-	    		'user_id' => $user_id
+	    		'user_id' => $user_id,
+				'total_gst_amout' => $this->input->post('total_gst_amout')
 	    	);
 
 			$this->db->where('id', $id);
@@ -209,6 +213,8 @@ class Model_orders extends CI_Model
 	    			'qty' => $this->input->post('qty')[$x],
 	    			'rate' => $this->input->post('rate_value')[$x],
 	    			'amount' => $this->input->post('amount_value')[$x],
+					'sgst' => $this->input->post('sgst_value')[$x],
+    				'cgst' => $this->input->post('cgst_value')[$x]
 	    		);
 	    		$this->db->insert('orders_item', $items);
 
